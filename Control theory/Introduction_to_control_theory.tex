@@ -1,172 +1,3 @@
-% \documentclass{article}
-
-% % Packages for formatting
-% \usepackage[utf8]{inputenc}
-% \usepackage[T1]{fontenc}
-% \usepackage{geometry}
-% \usepackage{titling}
-% \usepackage{enumitem}
-% \usepackage{amsmath}
-% \usepackage{amsfonts}
-% \usepackage{amssymb}
-% \usepackage{graphicx}
-% \usepackage{hyperref}
-% \usepackage{fancyhdr}
-% \usepackage{lipsum} % For generating dummy text, you can remove this in your final document
-% \usepackage{amsmath}
-% \usepackage{xcolor}
-% \usepackage{tcolorbox}
-% % \documentclass{article}
-
-% % Define page geometry
-% \geometry{a4paper, margin=1in}
-
-% % Define title
-% \title{Study Material Template}
-% \author{Your Name}
-% \date{\today}
-
-% % Define header and footer
-% \pagestyle{fancy}
-% \fancyhf{}
-% \rhead{\thepage}
-% \lhead{\theauthor}
-% \chead{\thetitle}
-% \renewcommand{\headrulewidth}{1pt}
-% \renewcommand{\footrulewidth}{0pt}
-
-% \begin{document}
-
-% % Title
-% \maketitle
-
-% % Table of contents
-% \tableofcontents
-% \newpage
-
-% % Start of content
-
-% \section{Introduction}
-% % Your introduction here
-
-% \section{Topic 1}
-% \subsection{Subtopic 1.1}
-% % Your content here
-
-% \subsection{Subtopic 1.2}
-% % Your content here
-
-% \section{LQR}
-
-% \subsection{INtuition behind poles}
-% In control theory, the system state-space equation
-
-% ˙x=Ax+Bu
-
-% y=Cx+Du
-
-% has the transfer function
-
-
-% % % Define tcolorbox styles
-% % \tcbset{
-% %     commonstyle/.style={
-% %         boxrule=0.5mm,
-% %         colback=white,
-% %         arc=2mm,
-% %         fonttitle=\bfseries
-% %     },
-% %     theoremstyle/.style={
-% %         commonstyle,
-% %         colframe=theoremcolor
-% %     },
-% %     definitionstyle/.style={
-% %         commonstyle,
-% %         colframe=definitioncolor
-% %     }
-% % }
-
-
-% % \begin{tcolorbox}[theoremstyle,title=Theorem]
-% % The transfer function of a system is given by
-% % \[ G(s) = C(sI-A)^{-1}B + D \]
-% % where \( (sI-A)^{-1} = \text{adj}(sI-A) \det(sI-A) \), and the poles of \( G(s) \) are the values of \( s \) that satisfy \( \det(sI-A) = 0 \). This is exactly the characteristic equation of matrix \( A \), whose solutions are the eigenvalues of \( A \).
-% % \end{tcolorbox}
-
-
-% % G(s)=C(sI−A)−1B+D.
-
-% % Since (sI−A)−1=adj(sI−A)det(sI−A), where adj(sI−A) is the adjugate of sI−A, the poles of G(s) are the numbers that satisfy det(sI−A)=0. This is exactly the characteristic equation of matrix A, whose solutions are the eigenvalues of A
-
-% % .
-
-% \subsection{LQR}
-% In pole-placement method, we want to place the poles in the specific spots (or, we choose specific eigenvalues). But it is not intuitive where to place them, especially for complex systems, systems with numerous actuators.
-% So, the new method is proposed. The key concept of the method lies in optimization of choosing K. 
-
-% In LQR we find an optimal $K$ by choosing parameters that are important to us, specifically how well the system performs and how much effort it takes to reach this performance.
-
-% If $Q>>R$, then we are turning the problem of 
-% Let J be an additive cost function:
-% \[J(x_0, p(x, t)) = \int_{0}^{\inf} g(x, u)\]
-% Q - how bad if x is not where it is supposed to be.
-% Q- nonnegative, poisitive semidefinite.
-
-% if the system is a postions, velocity, and Q = [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 10, 0], [0, 0, 0, 100] we penalizez for 
-
-% Suppose there is the best control law:
-% \[u = -kx\]
-
-% that miimizes the quadratic cost function.
-
-% \[J = int x^T Q x + u^T R u\]
-% I\textbf{Hamiltonian-Jacobi-Bellman (HJB)}
-
-% \[min u [g(x, u) + \frac{dJ}{dx f(x, u)}] = 0\]
-
-% Cost on effectiveness and energy to reach this effectiveness.
-% \subsection{Subtopic 2.1}
-% % Your content here
-
-% \subsection{Subtopic 2.2}
-% % Your content here
-
-% % Add more sections and subsections as needed
-
-% % End of content
-
-% \section{Controllability. Observability}
-
-% % \textbf{Controllability} 
-% % A system is controllable on $t_0\leqt t\leqt_f$  if it possible to find control input  $u(t)$ that would drive the system to a desired state $x(t_f)$ from nay initial state $x_0$
-
-% % \textbf{Observability}
-% % A system is observable on $t_0\leqt t\leqt_f$ if it is possible to estimate exactly the state of the system $x(t_f)$, given any intial estimation error.
-
-% % \textbf{Observability, alternative}
-% % A system is observable on $t_0\leqt t\leqt_f$  if any initial state $x_0$ is uniquely determined by output $y(t)$ on that interval.
-
-% \noindent\fbox{%
-% \begin{minipage}{\textwidth}
-% \begin{tcolorbox}[controllability,title=Controllability]
-% A system is controllable on \(t_0 \leq t \leq t_f\) if it is possible to find a control input \(u(t)\) that would drive the system to a desired state \(x(t_f)\) from any initial state \(x_0\).
-% \end{tcolorbox}
-
-% \begin{tcolorbox}[observability,title=Observability]
-% A system is observable on \(t_0 \leq t \leq t_f\) if it is possible to exactly estimate the state of the system \(x(t_f)\), given any initial estimation error.
-% \end{tcolorbox}
-
-% \begin{tcolorbox}[alternative,title=Observability (Alternative)]
-% A system is observable on \(t_0 \leq t \leq t_f\) if any initial state \(x_0\) is uniquely determined by the output \(y(t)\) on that interval.
-% \end{tcolorbox}
-% \end{minipage}%
-% }
-
-
-
-% \end{document}
-
-
 \documentclass{article}
 
 % Packages for formatting
@@ -240,6 +71,8 @@
 
 % Start of content
 
+\section{Maths}
+
 \section{Introduction}
 % Your introduction here
 
@@ -252,7 +85,7 @@
 
 \section{LQR}
 
-\subsection{INtuition behind poles}
+\subsection{Ituition behind poles}
 In control theory, the system state-space equation
 
 \[\dot{x} = Ax+Bu\]
@@ -303,26 +136,24 @@ Cost on effectiveness and energy to reach this effectiveness.
 % End of content
 
 \section{Controllability. Observability}
+\include{controllability_observability.tex}
 
-\noindent\fbox{%
-\begin{minipage}{\textwidth}
-\begin{tcolorbox}[controllability,title=Controllability]
-A system is controllable on \(t_0 \leq t \leq t_f\) if it is possible to find a control input \(u(t)\) that would drive the system to a desired state \(x(t_f)\) from any initial state \(x_0\).
-\end{tcolorbox}
 
-\begin{tcolorbox}[observability,title=Observability]
-A system is observable on \(t_0 \leq t \leq t_f\) if it is possible to exactly estimate the state of the system \(x(t_f)\), given any initial estimation error.
-\end{tcolorbox}
 
-\begin{tcolorbox}[alternative,title=Observability (Alternative)]
-A system is observable on \(t_0 \leq t \leq t_f\) if any initial state \(x_0\) is uniquely determined by the output \(y(t)\) on that interval.
-\end{tcolorbox}
-\end{minipage}%
-}
+
+\section{Kalman Filter}
+\include{Kalman.tex}
+
 
 \section{Reference materials}
 
-https://isharifi.ir/teaching/2019/IoT/[Dan_Simon]_Optimal_State_Estimation_Kalman,_H_In(BookFi).pdf
-https://www.researchgate.net/profile/Hamid-Nasir-2/publication/297838887_Stocking_and_stand_structure_of_Sungai_Kerang_mangroves_in_matang_peninsular_Malaysia/links/5c05e070299bf169ae3049c0/Stocking-and-stand-structure-of-Sungai-Kerang-mangroves-in-matang-peninsular-Malaysia.pdf#[0,{%22name%22:%22XYZ%22},0,601,0]
+% https://isharifi.ir/teaching/2019/IoT/[Dan_Simon]_Optimal_State_Estimation_Kalman,_H_In(BookFi).pdf
+% % https://www.researchgate.net/profile/Hamid-Nasir-2/publication/297838887_Stocking_and_stand_structure_of_Sungai_Kerang_mangroves_in_matang_peninsular_Malaysia/links/5c05e070299bf169ae3049c0/Stocking-and-stand-structure-of-Sungai-Kerang-mangroves-in-matang-peninsular-Malaysia.pdf#[0,{%22name%22:%22XYZ%22},0,601,0]
+
+(Controllability. Observability)
+% https://www.ece.rutgers.edu/~gajic/psfiles/chap5.pdf
+
+\section{Linearization}
+\include{Linearization}
 
 \end{document}

@@ -1,0 +1,49 @@
+
+\noindent\fbox{%
+\begin{minipage}{\textwidth}
+\begin{tcolorbox}[controllability,title=Controllability]
+A system is controllable on \(t_0 \leq t \leq t_f\) if it is possible to find a control input \(u(t)\) that would drive the system to a desired state \(x(t_f)\) from any initial state \(x_0\).
+\end{tcolorbox}
+
+\begin{tcolorbox}[observability,title=Observability]
+A system is observable on \(t_0 \leq t \leq t_f\) if it is possible to exactly estimate the state of the system \(x(t_f)\), given any initial estimation error.
+\end{tcolorbox}
+
+\begin{tcolorbox}[alternative,title=Observability (Alternative)]
+A system is observable on \(t_0 \leq t \leq t_f\) if any initial state \(x_0\) is uniquely determined by the output \(y(t)\) on that interval.
+\end{tcolorbox}
+\end{minipage}%
+}
+
+
+Observability criterion
+
+
+
+Consider discrete LTI.
+
+And a Luenberger observer:
+
+\[\]
+
+Error dynamics for the observer. 
+
+
+If the system is controllable, we would be able to find such controller to the system, whcih would make the system stable, which means that the error goes to zero.
+
+
+\[O^T = [C^T (A^T)C^T]\]
+
+
+Observability matrix
+
+error dynamics need to be stabilized, which means thta it needs t be controllable.
+
+Observability criterion.
+
+
+Needs to be full column rank.
+
+
+
+\section{PBH controllability criterion}

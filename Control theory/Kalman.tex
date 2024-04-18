@@ -1,0 +1,96 @@
+The way we pick our initial state estimate does not have a bias.
+
+Assume you could pick your initial state estimate $\hat x_0$ such that
+the initial state estimation error behaves as a random 
+variable sampled from a Gaussian distribution $x_0 ~ N(0, P_0)$
+
+Knowing mean 
+
+\[\]
+
+E[w_i] = 0
+
+All subsequent means will be $E[]$
+
+
+
+Let's compute the autocovariance $P_{i+1}$ knowing $P_i$ 
+
+\[P_{i+1} = E[] = E[(Ax)]\]
+
+
+We can assume thta the random process is uncorrelated with x, so 
+
+Since the two processes are uncorreleted then their covariance is 0.  
+
+\[P_{i+1} = E[A x_i x_i^T A^T + w_i w_i^T] \]
+
+Note that x_i^T A^T = P_i - a covariance of the previous step. 
+\[P_{i+1} = A P_i A^T + Q\]
+
+
+$v_i$ - the random noise sampled from thhe Gaussian distribution, which represents the sensor error. 
+\[v_i ~ N(0, R)\]
+
+
+$\hat x_{i+1}^-$ is the estimation before measurements - apriori estimate.
+
+\[x_i+1 \]
+
+$L_i$ is a control gain. 
+
+
+
+Apriori error \[x_{i+1}^- = x_{i+1} - \\hat x_{i+1}^-\]
+
+
+We claculate aposteriori covariance knowing our apriori covariance.
+
+
+The question is how to minimize those covariances.
+
+
+
+
+
+f we have all of the measurements
+up to and including time k available for use in our estimate of X k , then we can form
+an a posteriori estimate, which we denote as 2:. The "+" superscript denotes that
+the estimate is a posteriori. One way to form the a posteriori state estimate is to
+compute the expected value of x k conditioned on all of the measurements up to
+and including time k:
+2; = E [ X k / y l ,y 2 , . . ., Y k ] = a posteriori estimate
+
+
+
+
+DERIVATIONOF THE DISCRETE-TIME KALMAN FILTER 125
+the estimate is a posteriori. One way to form the a posteriori state estimate is to
+compute the expected value of x k conditioned on all of the measurements up to
+and including time k:
+2; = E [ X k / y l ,y 2 , . . ., Y k ] = a posteriori estimate (5.3)
+If we have all of the measurements before (but not including) time k available for
+use in our estimate of X k , then we can form an a praori estimate, which we denote
+as 2 ; . The "-"superscript denotes that the estimate is a priori. One way to form
+the a priori state estimate is to compute the expected value of 51, conditioned on
+all of the measurements before (but not including) time k:
+2; = E [ X k l y l , y 2 , . ., Y k - l ] = a priori estimate (5.4)
+It is important to note that 2; and 2; are both estimates of the same quantity; they
+are both estimates of X k . However, 2 i is our estimate of Xk before the measurement
+Y k is taken into account, and 2: is our estimate of 21, after the measurement y k
+is taken into account. We naturally expect 2; to be a better estimate than 2 i ,
+because we use more information to compute 2;:
+2 i =
+2' k = estimate of Xk after we process the measurement at time k (5.5)
+If we have measurements after time k available for use in our estimate of X k , then
+we can form a smoothed estimate. One way to form the smoothed state estimate is
+to compute the expected value of x k conditioned on all of the measurements that
+are available:
+estimate of Xk before we process the measurement at time k
+? k l k + N = E [ x k l Y l i Y 2 , ' . . , Y k , " ' , Y k + N ] = smoothed estimate (5.6)
+where N is some positive integer whose value depends on the specific problem that
+is being solved. If we want to find the best prediction of x k more than one time
+step ahead of the available measurements, then we can form a predicted estimate.
+One way to form the predicted state estimate is to compute the expected value of
+Xk conditioned on all of the measurements that are available:
+2 k l k - M = E [ x k j y 1 , y 2 , - . .,y k - ~ ]= predicted estimate 
