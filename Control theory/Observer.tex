@@ -5,4 +5,67 @@ the task is not that trivial due to some problems:
 
 \begin{enumerate}
     \item Lack of sensors. For a quadrotor we can not measure the height straight forwardly 
+    \item Measurements can be imprecise or biased
+    \item Measurements can be only made in discrete time
 \end{enumerate}
+
+The key problem arises when the output of the system $y$ is not the whole state $x$, but $y = Cx$, which
+means that we are able to get the state partially.
+
+These are just several problems that create the difficulties for us to measure the state of the system. 
+
+
+Let's introduce a new idea of how to introduce an observer in our system. 
+
+% \begin{cases}
+%     \dot x = Ax + Bu
+%     y = C \cdot x
+%     \hat x(t) = estimate  (y(t))
+%     u = -K \hat x
+% \end{cases}
+
+We estimate x $\hat x$ based on the history of y values. 
+
+
+$x$ and $y$ are the state and outpuut (actual or true)
+
+\textbf{Estimation error}
+
+State estimation error:
+\[\epsilon = \hat x - x\]
+
+But since we do not know x, we cannot compute this error $\epsilon$.
+
+However, we can always find $~ y = C \hat x - y$. 
+
+Let's suggest that the dynamics should also hold for the observed state:
+\[\hat \dot x = A \hat x + Bu\]
+
+Let's introduce in our equation a linear correction law $-L ~y$. 
+Since $~y = C \hat x - y$, we get:
+
+\begin{equation}
+    \hat \dot x = A \hat x + Bu + L(y - C \hat x) 
+\end{equation}
+
+This is called Luenberger observer.  
+
+But how to find suitable observer gain $L$?
+
+Let's subtract $\dot x = Ax + Bu$ from (?). The equation we got is the observer error dynamics:
+
+% \begin{equation}
+%     \hat \dot x - \dot x = A \hat x - Ax + L(y - C \hat x)
+% \begin{equation}
+
+
+% \begin{equation}
+    % \dot \epsilon = (A-LC) \epsilon
+% \end{equation}
+
+
+With no knowledge of $x$ nad $\hat x$, we can define the stability of the system. 
+
+The observer $\dot \epsilon = (A - LC) \epsilon$ is stable. 
+
+\dot x = Ax 

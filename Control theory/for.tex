@@ -1,3 +1,4 @@
+
 \documentclass{article}
 
 % Packages for formatting
@@ -71,8 +72,6 @@
 
 % Start of content
 
-\section{Maths}
-
 \section{Introduction}
 % Your introduction here
 
@@ -85,7 +84,7 @@
 
 \section{LQR}
 
-\subsection{Intuition behind poles}
+\subsection{INtuition behind poles}
 In control theory, the system state-space equation
 
 \[\dot{x} = Ax+Bu\]
@@ -134,35 +133,26 @@ Cost on effectiveness and energy to reach this effectiveness.
 % Add more sections and subsections as needed
 
 % End of content
-\section{Observer}
-\include{Observer}
-
-
-\section{Filters}
-\include{Filters.tex}
 
 \section{Controllability. Observability}
-\include{controllability_observability.tex}
 
+\noindent\fbox{%
+\begin{minipage}{\textwidth}
+\begin{tcolorbox}[controllability,title=Controllability]
+A system is controllable on \(t_0 \leq t \leq t_f\) if it is possible to find a control input \(u(t)\) that would drive the system to a desired state \(x(t_f)\) from any initial state \(x_0\).
+\end{tcolorbox}
 
+\begin{tcolorbox}[observability,title=Observability]
+A system is observable on \(t_0 \leq t \leq t_f\) if it is possible to exactly estimate the state of the system \(x(t_f)\), given any initial estimation error.
+\end{tcolorbox}
 
+\begin{tcolorbox}[alternative,title=Observability (Alternative)]
+A system is observable on \(t_0 \leq t \leq t_f\) if any initial state \(x_0\) is uniquely determined by the output \(y(t)\) on that interval.
+\end{tcolorbox}
+\end{minipage}%
+}
 
-\section{Kalman Filter}
-\include{Kalman.tex}
-
-
-\section{Reference materials}
-
-% https://isharifi.ir/teaching/2019/IoT/[Dan_Simon]_Optimal_State_Estimation_Kalman,_H_In(BookFi).pdf
-% % https://www.researchgate.net/profile/Hamid-Nasir-2/publication/297838887_Stocking_and_stand_structure_of_Sungai_Kerang_mangroves_in_matang_peninsular_Malaysia/links/5c05e070299bf169ae3049c0/Stocking-and-stand-structure-of-Sungai-Kerang-mangroves-in-matang-peninsular-Malaysia.pdf#[0,{%22name%22:%22XYZ%22},0,601,0]
-
-(Controllability. Observability)
-% https://www.ece.rutgers.edu/~gajic/psfiles/chap5.pdf
-
-\section{Linearization}
-\include{Linearization}
-
-\section{Lyapunov theory}
-\include{Lyapunov theory}
 
 \end{document}
+
+
