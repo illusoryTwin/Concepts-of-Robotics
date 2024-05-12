@@ -1,8 +1,122 @@
 \section{Dynamics}
 
-\subsubsection{Inertia matrix}
+
+
+\subsection{Recall}
+
+Let's recall the main formulas in dynamics
+
+
+\begin{minipage}{0.45\textwidth}
+    \begin{equation}
+    \textbf{Linear Momentum: } p = mv
+    \end{equation}
+    where $m$ is the mass,\\
+    $v$ is linear velocity.
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\textwidth}
+    \begin{equation}
+    \textbf{Angular Momentum: } L = I\omega
+    \end{equation}
+    where $I$ is the moment of inertia,\\
+    $\omega$ is angular velocity.
+\end{minipage}
+
+
+Euler's laws
+% http://emweb.unl.edu/NEGAHBAN/EM373/note21/note21.htm
+
+\subsection{Generalized forces. Generalized coordinates}
+
+
+\subsection{Intro to dynamics}
+
+Dynamics in Robotics stablishes the relation between generalized forces on the robot {$\tau(t)$} and 
+robot motion {$q(t)$, $\dot q(t)$, $\ddot q(t)$}. 
+
+We can speak about torques as torques at the joints, external forces or torques applied from the environment. 
+
+When we speak about robot motion, we usually speak about joint trajectory or Cartesian trajcetory (of the end-effector). 
+
+The dynamic model of a rigid body is described by the following equation:
+
+\[M(q) \ddot q + C(q, \dot q) \dot q + g(q) = \tau\]
+So, when we do the dynamics model, we search for: 
+
+\begin{enumerate}
+    \item M(q) - inertia of mass matrix
+    \item C($q, \dot q$) - corioulis and centrifugal forces
+    \item g(q) - gravity forces
+    \item $\tau$ - generalized forces
+\end{enumerate}
+
+The task of \textbf{Forward dynamics} is  obtaining the robot motion $\ddot q$ based on applied forces, torques $\tau$. 
+
+The task of \textbf{Inverse dynamics} is obtaining the forces or torques $\tau$ needed to achieve a desired motion $\ddot q$.  
+
+% A scheme 
+
+ % \textbf{Angular moment}
+
+\subsection{Approaches for dynamic modeling}
+Two core approaches for solving dynamics exist: Newton-Euler (force-torque based) and Euler-Lagrange (energy based). 
+
+\subsubsection{Euler-Lagrange}
+
+
+Euler-Lagrange approach is based on the system's energy
+
+\begin{itemize}
+    \item Kinetic energy
+    \item Potential energy
+\end{itemize}
+
+\textbf{Lagrangian}
+\[L(q, \dot q) = T(q, \dot q) - U(q) \text{, where $q$ are \textit{generalized} forces}\]
+
+Euler-Lagrange equation:
+\[\]
+
+
+Intuition behind the Lagrangian. 
+
+\subsection{Center of mass}
+
+\begin{enumerate}
+    \item The body moves so as if the mass is concentrated in the CoM. 
+    \item All the applied forces are applied to the CoM.
+\end{enumerate}
+
+
+Center of mass for a rigid body:
+\[p_c = \dfrac{1}{m} \int_m { \widetilde{p}  dm} = \dfrac{1}{m} \int_m {\widetilde{p} \rho dV}, \]
+
+$\widetilde{p}$ is position of some point of the rigid body.
+
+\subsubsection{Tensor of inertia}
+
 Let's recall the formula:
 
 \[A \times (B \times C) = (A \cdot C)B - (A \cdot B)\]
 
+It is always symmetric.
 % https://ocw.mit.edu/courses/16-07-dynamics-fall-2009/dd277ec654440f4c2b5b07d6c286c3fd_MIT16_07F09_Lec26.pdf
+
+% http://www.kwon3d.com/theory/moi/iten.html
+
+
+
+\subsection{Angular momentum}
+
+- angular momentum in frame {0}
+\[{}^0h = {}^0I  {}^0w\]
+
+- angular momentum in frame {B}
+\[{}^Bh = {}^BI  {}^Bw\]
+
+Change from reference frame {B} to {0}
+
+
+\subsection{Kinetics energy of a rigid body}
+\subsection{Potential energy of a rigid body}

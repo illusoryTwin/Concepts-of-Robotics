@@ -1,13 +1,59 @@
-Stability is not defined only for linear systems, but forr nonlinear systems as well.
+Stability is not defined only for linear systems, but for nonlinear systems as well.
 
 There exist a small neighbourhood. Every solution that starts from this neighbourhood will asymptotically approach the same solution. 
 
-\textbf{Asymptotic stability criteria:}
+\textbf{Asymptotic stability criteria:}\\
 Autonomous dynamic system $\dot x = f(x)$ is asymptotically stable if there exists a scalar function $V = V(x) > 0$. 
 
-Autonomous - only \frac{\partial epen}{\partial s}on its state, does not depend on any external input. 
+% Autonomous - only \frac{\partial epen}{\partial s}on its state, does not depend on any external input. 
 
 Note that computing $\dot V(x)$ comes along with computing $\dot x$. 
 We can think of $V(x)$ as energy (pseudo-energy).
 
 Asymptotic stability means that the system converges, and marginal stability means that the system does not diverge. 
+
+
+\begin{tcolorbox}[colback=blue!10,colframe=blue!50!black,title=\textbf{Asymptotic stability}]
+The system is called asymptotically stable if there exists a function $V > 0$ such that $\dot{V} < 0$, except for $V = 0, \dot{V} = 0$. 
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=green!10,colframe=green!50!black,title=\textbf{Marginal stability}]
+The system $\dot{x} = f(x)$ is stable in the sense of Lyapunov if there exists $V > 0$ such that $\dot{V} \leq 0$. 
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=red!10,colframe=red!50!black,title=\textbf{Lyapunov function}]
+A function $V > 0$ in this case is called a Lyapunov function. 
+\end{tcolorbox}
+
+
+
+\textbf{Example 1}
+Consider the following system:
+\[\dot{x} = -x\]
+
+Let's introduce a function $V = x^2 > 0$ for all $x \neq 0$. $\dot{V} = 2x \cdot \dot{x} = 2x (-x) = -2x^2 < 0$. 
+$V$ satisfies the Lyapunov criteria, so the system is (asymptotically) stable. 
+
+\textbf{Example 2}
+Consider the equation of the pendulum:
+\[\ddot{q} = -\dot{q} - \sin(q)\]
+
+% Let's introduce a function $V = q^2$.
+
+\subsection{LaSalle's Principle}
+The system is called stable if 
+
+
+LaSalle's principle allows us to prove asymptotic stability even for $\dot{V}(x) \leq 0$ only for the trivial solution.
+
+
+\subsection{Linear case}
+Lyapunov theory applies for both nonlinear and linear systems. 
+For linear systems the following feature exist:
+
+For a system $\dot x = Ax$, we can always choose a Lyapunov candidate function in the form:
+
+\[V = x^TSx, \] where S is positive-definite
+\[\dot V = \dot x^T S x + x^T S \dot x = (Ax)^T Sx + x^TSAx = x^TA^TSx + x^TSAx = x^T (A^TS+SA) x\]
+
+

@@ -1,4 +1,10 @@
-We created a system with a controller, but how to check the curren state of the system.
+When the full state feedback is unavailablle, we introducce an observer to \underline{estimate} the state $x$.
+
+% https://courses.engr.illinois.edu/ece486/fa2018/handbook/lec22.html
+
+
+
+We created a system with a controller, but how to check the current state of the system.
 
 We can try to estimate it with the measurements, for example form sensors. But in real life 
 the task is not that trivial due to some problems:
@@ -68,4 +74,8 @@ With no knowledge of $x$ nad $\hat x$, we can define the stability of the system
 
 The observer $\dot \epsilon = (A - LC) \epsilon$ is stable. 
 
-\dot x = Ax 
+% \dot x = Ax 
+
+
+\subsection{Luenberger Observer}
+Based on the output y, we wish to estimate input x.

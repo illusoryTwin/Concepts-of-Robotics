@@ -1,112 +1,112 @@
-Linear models occur only in specific cases: DC motors. mass-spring damper, 3D-printer.
-Most real-world systems are non-linear. 
+% Linear models occur only in specific cases: DC motors. mass-spring damper, 3D-printer.
+% Most real-world systems are non-linear. 
 
-\textit{\textbf{Taylor expansion around node.}}
+% \textit{\textbf{Taylor expansion around node.}}
 
-Let's consider a non-linear dynamical system $\dot x = f(x, u)$ and a trajectory $x_0 = f(x_0, u_0)$
+% Let's consider a non-linear dynamical system $\dot x = f(x, u)$ and a trajectory $x_0 = f(x_0, u_0)$
 
-Node - any position at which robot remains static. 
+% Node - any position at which robot remains static. 
 
-Physical meaning: node is any position where the robot remains static.
+% Physical meaning: node is any position where the robot remains static.
 
-The main "magic" aboout the node happens with $u_0$, which is the control that enables the robot to be static. 
-\[A = \dfrac{\partial f}{\partial x}\]
-
-
-
-\textit{\textbf{Taylor expansion along a trajectory.}}
-
-Consider a non-linear dynamical system:
-$\dot  x = f(x, u)$ and a trajectory
-
-\[f(x, u) \approx f(x_0, u_0) + \dfrac{\partial f}{\partial x} (x - x_0) + \dfrac{\partial f}{\partial f} (u - u_0) + \text{H.O.T}\]
-
-Since $\dot e = \dot \xi - \dot x_0$, we re-werite:
-
-\[\dot e = Ae + Bv + \text{H.O.T}\]
-
-Let's drop the high-order term and obtain linearization. 
-
-\[\dot e = Ae + Bv\]
-
-Expansion around the Node and expansion around trajectory stay the same, nothing actually changes. 
+% The main "magic" aboout the node happens with $u_0$, which is the control that enables the robot to be static. 
+% \[A = \dfrac{\partial f}{\partial x}\]
 
 
 
-If we drop the higher-order terms from the Taylor expansion, we obtain linearization of the system dynamics. 
+% \textit{\textbf{Taylor expansion along a trajectory.}}
 
-\[\dot e = Ae + Bv\]
+% Consider a non-linear dynamical system:
+% $\dot  x = f(x, u)$ and a trajectory
 
-Nothing changes between expansion around a node and expansion along a trajectory. 
-The original function and the local approximation behave in the same way in the region.
-However, the change of variables is different
+% \[f(x, u) \approx f(x_0, u_0) + \dfrac{\partial f}{\partial x} (x - x_0) + \dfrac{\partial f}{\partial f} (u - u_0) + \text{H.O.T}\]
 
-So, can we linearaze around each and any point?
+% Since $\dot e = \dot \xi - \dot x_0$, we re-werite:
 
-1) If it is a node - yes. 
-2) If we want to linearize around some other point - yes, but the chnage of variables would entail slightly 
-different results. 
+% \[\dot e = Ae + Bv + \text{H.O.T}\]
 
-While we had:
-\[ e = x - x_0, \dot e = \dot x\], now
-$\dot e$ is the differrence between the derivative of the state of our non-linear system and derivative of the state of our trajectory distance from the trajectory linearization.  
+% Let's drop the high-order term and obtain linearization. 
 
-The meaning of the variables changes slightly, but the mathematical expression is the exact same expression. 
+% \[\dot e = Ae + Bv\]
 
-
-\textbf{Affine expansion}
-
-The other way to obtain linearization, without change of varibales is as follows. 
-
-\[f(x, u) \approx f(x_0, u_0) + A(x-x_0) + B(u-u_0) \]
-
-Denoting \[f(x_0, u_0) - Ax_0 - Bu_0 = c\]
-
-\[\dot x = Ax+ Bu+ c\]
-c makes it not a linear model, but affine, which means it has a constant term.
-
-It can be a constant in the case of a node, \omegar a function of time in the case of expansion along the trajectory.
-
-
-Often we choose u to compensate c, so u will also be affine in this case. 
-
-
-Manipulator equations (describe ???)
-
-
-Cars, underwater robots are desccribed by the other equations - Euler or Lagrangian equaitons. 
-
-Consider  Manipulator equation - quadratic, symmetric, another form of kinetic energy. 
-\[ \]
-
-H - generalized inertia matrix 
-\[x = \vec{q - q_0}\]
-
-\[\] 
-
-We can express $\ddot q$ as long as H is invertible.
-For any mechanical system, H happens to be always invertible. 
-
-
-Let's introduce 
-
-\[\phi() = H^-1 (\tau - C \dot q - g)\]
-
-mechanical systems are second-order systems, while the state space is a 1st order system. 
-d\dt() = 
-
-Let's replace $d\dt()$ with $\dot x$. 
-
-State matrices are:
-A = []
-
-
-\[\dfrac{\partial \phi}{\partial q} = H{-1} (\dfrac{\partial C \dot q}{\partial q} -\dfrac{})\]
-
-\[dfrac{\partial \phi}{\partial \dot q} = \dfrac{\partial}{\partial \dot q}\]
+% Expansion around the Node and expansion around trajectory stay the same, nothing actually changes. 
 
 
 
-\subsection{Sylvester equation}
+% If we drop the higher-order terms from the Taylor expansion, we obtain linearization of the system dynamics. 
 
-% https://web.stanford.edu/class/ee363/lectures/inv-sub.pdf
+% \[\dot e = Ae + Bv\]
+
+% Nothing changes between expansion around a node and expansion along a trajectory. 
+% The original function and the local approximation behave in the same way in the region.
+% However, the change of variables is different
+
+% So, can we linearaze around each and any point?
+
+% 1) If it is a node - yes. 
+% 2) If we want to linearize around some other point - yes, but the chnage of variables would entail slightly 
+% different results. 
+
+% While we had:
+% \[ e = x - x_0, \dot e = \dot x\], now
+% $\dot e$ is the differrence between the derivative of the state of our non-linear system and derivative of the state of our trajectory distance from the trajectory linearization.  
+
+% The meaning of the variables changes slightly, but the mathematical expression is the exact same expression. 
+
+
+% \textbf{Affine expansion}
+
+% The other way to obtain linearization, without change of varibales is as follows. 
+
+% \[f(x, u) \approx f(x_0, u_0) + A(x-x_0) + B(u-u_0) \]
+
+% Denoting \[f(x_0, u_0) - Ax_0 - Bu_0 = c\]
+
+% \[\dot x = Ax+ Bu+ c\]
+% c makes it not a linear model, but affine, which means it has a constant term.
+
+% It can be a constant in the case of a node, \omegar a function of time in the case of expansion along the trajectory.
+
+
+% Often we choose u to compensate c, so u will also be affine in this case. 
+
+
+% Manipulator equations (describe ???)
+
+
+% Cars, underwater robots are desccribed by the other equations - Euler or Lagrangian equaitons. 
+
+% Consider  Manipulator equation - quadratic, symmetric, another form of kinetic energy. 
+% \[ \]
+
+% H - generalized inertia matrix 
+% \[x = \vec{q - q_0}\]
+
+% \[\] 
+
+% We can express $\ddot q$ as long as H is invertible.
+% For any mechanical system, H happens to be always invertible. 
+
+
+% Let's introduce 
+
+% \[\phi() = H^-1 (\tau - C \dot q - g)\]
+
+% mechanical systems are second-order systems, while the state space is a 1st order system. 
+% d\dt() = 
+
+% Let's replace $d\dt()$ with $\dot x$. 
+
+% State matrices are:
+% A = []
+
+
+% \[\dfrac{\partial \phi}{\partial q} = H{-1} (\dfrac{\partial C \dot q}{\partial q} -\dfrac{})\]
+
+% \[dfrac{\partial \phi}{\partial \dot q} = \dfrac{\partial}{\partial \dot q}\]
+
+
+
+% \subsection{Sylvester equation}
+
+% % https://web.stanford.edu/class/ee363/lectures/inv-sub.pdf
