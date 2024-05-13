@@ -1,16 +1,159 @@
+% Tha main tasks of control theory  include control design, trajectory tracking, point-to-point control
 
-\begin{tcolorbox}[colback=green!10,colframe=green!50!black,title=\textbf{Dynamical systems}]
-    The task of stabilizing control is defining the control law that makes a certain solution of 
+% \subsection*{Control design}
+% With the control we choose we can make the system stable. 
+
+% \begin{tcolorbox}[colback=green!10,colframe=green!50!black,title=\textbf{Dynamical systems}]
+%     The task of \textbf{stabilizing control} is defining the control law that makes a certain solution of 
+%     a dynamical system stable.
+% \end{tcolorbox}
+
+% Along with linear control, this is also true for non-linear. 
+
+% Consider LTI system. 
+% \[\dot x = Ax + Bu\]
+% and choose control as a linear function of input:
+% \[u = - Kx, \] where K is a \textbf{control gain}. 
+
+% \begin{center}
+%     \textbf{\textit{Stability condition}}
+% \end{center}
+
+
+% Then, the dynamical system could be represented as follows:
+% \begin{equation}
+%     \dot x = Ax - BKx = (A-BK)x
+% \end{equation}
+
+
+% The equation above describes autonomous closed loop system. 
+
+% \noindent\fbox{
+% \textbf{Hurwitz matrix}:
+% A square matrix M that has eigenvalues with strictly negative \\
+
+% real parts is called \textbf{Hurwitz}
+% }
+
+
+
+% \begin{tcolorbox}[colback=yellow!10,colframe=yellow!50!black,title=\textbf{Stability condition}]
+%     The system is \textbf{asymptotically stable} if the eigenvalues' real parts of the matrix (A-BK) are strictly negative.
+%     The system is \textbf{stable in the sense of Lyapunov} if the eigenvalues' real parts of the matrix (A-BK) are non-positive.
+% \end{tcolorbox}
+
+% Note that:
+% \[\dot x = (a - bk) x\]
+
+% The solution to this closed-loop system is:
+% \[x(t) = x_0 e^{(a-bk)t}\]
+
+% The system is converging to 0 for $a-bk<0$. 
+
+% \subsection*{Trajectory tracking}
+% The task is to stabilize the reference trajectory (system) around the points determined by  this equaiton
+
+% The function $x* = x*(t)$ and control law $u* = u*(t)$ are a solution for the system $\dot x = Ax + Bu$. 
+% This means that:
+% \[\dot x* = Ax* + Bu*\]
+
+% Let's propose a control law to stabilize the system. But first, let's define the distances between $\dot x*$ and $\dot x$
+
+% \[\dot x* - \dot x = A(x* - x) + B(u* - u)\]
+
+% Change of variables: $e=x* - x$, $u* - u$
+
+% \[\dot e = Ae + Bv\]
+
+% The equation above is called the \textbf{error dynamics}
+
+% For making the error dynamics system converge to 0 (the motivation behind it is obvious), we need to propose 
+% stabilizing control. 
+
+% Suggest $v = -Ke$, then: 
+
+% \[\dot e = Ae - BKe = (A-BK)e\]
+
+% From these equations:
+% \[\dot x* - \dot x = A(x* - x) + B(u* - u)\]
+% \[\dot e = Ae - BKe\]
+
+% notice that $-Ke = (u* - u)$, or 
+% \[-K(x* - x) = (u* - u)\]
+
+% Thus, 
+% \[u = u* + K(x*-x)\]
+
+% \subsection*{Point-to-Point Control}
+
+% Point-to-point control is slightly different from Trajectory tracking  in terms of reference input - now it is $x* = const$ 
+% and feed-forward control - now it is $u* = const$. 
+% And thus, 
+% \[Ax* + Bu* = 0\]
+% We can find u* if it is not provided:
+% \[u* = -B^{+}Ax*\]
+
+% Since the error dynamics and the stabilizing control are the same as those in Trajectory planning, 
+% we can consider the following control law:
+% \[u = K(x*(t) - x) + u*(t)\]
+
+% \[\dot x = Ax + BK(x*(t) - x) + Bu*(t)\]
+% \[\dot x = (A - BK)x + BK x*(t) + Bu*(t)\]
+
+
+
+\section{Control}
+
+The main tasks of control theory include \textbf{\underline{control design}}, \textbf{\underline{trajectory tracking}}, and \textbf{\underline{point-to-point control}}.
+
+
+\subsection*{Control Design}
+
+\begin{tcolorbox}[colback=green!10,colframe=green!50!black,title=\textbf{Dynamical Systems}]
+    The task of \textbf{stabilizing control} is defining the control law that makes a certain solution of 
     a dynamical system stable.
 \end{tcolorbox}
 
-Along with linear control, this is also true for non-linear. 
+This is true for both linear and nonlinear systems.
 
-We can find control as a linear function of input:
-\[u = - Kx\]
+Consider a Linear Time-Invariant (LTI) system:
+\[\dot{x} = Ax + Bu,\]
+and choose the control as a linear function of the state:
+\[u = -Kx,\] where \(K\) is the \textbf{control gain}.
 
-\textbf{Stability condition}
+\begin{center}
+    \textbf{\textit{Stability Condition}}
+\end{center}
 
+Then, the closed-loop system can be represented as:
+\[\dot{x} = (A - BK)x.\]
 
-Then, the dynamical system could be represented as follows:
-\[\dot x = Ax - BKx = (A-BK)x\]
+The system is asymptotically stable if the eigenvalues of the matrix \(A - BK\) have strictly negative real parts.
+
+\subsection*{Trajectory Tracking}
+
+The task is to stabilize the system around a reference trajectory.
+
+Let \(x^*(t)\) and \(u^*(t)\) be solutions for the system \(\dot{x} = Ax + Bu\). This means that:
+\[\dot{x}^* = Ax^* + Bu^*.\]
+
+Define the error as \(e = x^* - x\) and \(v = u^* - u\).
+
+Then, the error dynamics become:
+\[\dot{e} = Ae + Bv.\]
+
+To stabilize the system, suggest \(v = -Ke\), then:
+\[\dot{e} = (A - BK)e.\]
+
+Therefore, the control law becomes:
+\[u = u^* + K(x^* - x).\]
+
+\subsection*{Point-to-Point Control}
+
+Point-to-point control differs from trajectory tracking in that the reference input is constant, \(x^* = \text{const}\), and feed-forward control is also constant, \(u^* = \text{const}\).
+
+Since the error dynamics and the stabilizing control are the same as in trajectory tracking, the control law becomes:
+\[u = K(x^* - x) + u^*.\]
+
+The dynamics of the system become:
+\[\dot{x} = (A - BK)x + BKx^* + Bu^*.\]
