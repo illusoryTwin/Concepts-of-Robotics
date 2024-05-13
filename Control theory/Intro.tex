@@ -1,0 +1,51 @@
+
+\begin{tcolorbox}[colback=green!10,colframe=green!50!black,title=\textbf{Dynamical systems}]
+    Let's consider the nth-order ordinary differential equation (ODE):
+    \[\mathbf{x}^{(n)}=\mathbf{f}(\mathbf{x}^{(n-1)},\mathbf{x}^{(n-2)},...,\ddot{\mathbf{x}},\dot{\mathbf{x}},\mathbf{x},t),\]
+    where $x(t)$ is a solutoin for the system, and $t$ is an independent variable (usually - time).
+    This equation is called \textbf{a dynamical system} and it represents a dynamics of the system.
+
+\end{tcolorbox}
+
+State of 
+
+
+In canonical form, linear ODE is represented in the following way:
+\[a_{n}z^{(n)} +a_{n-1}z^{(n-1)}+...+a_{2}\ddot z+a_{1}\dot z + a_0 z= b_0\]
+
+The set $\{ \mathbf{x}, \ \dot{\mathbf{x}} \ ..., \ \mathbf{x}^{(n-1)} \}$ is called the \textbf{state  of the system}.
+
+
+In case if relationships between state, output and control is **linear**, we can formulate the model of system in following form:
+\begin{equation}
+\begin{cases}
+\mathbf{\dot{x}} =\mathbf{A}\mathbf{x} + \mathbf{B}\mathbf{u} \\
+\mathbf{y}=\mathbf{C}\mathbf{x} + \mathbf{D}\mathbf{u}
+\end{cases}
+\end{equation}
+
+where
+*   $\mathbf{x} \in \mathbb{R}^n$ states of the system
+*   $\mathbf{y} \in \mathbb{R}^l$ output vector
+*   $\mathbf{u} \in \mathbb{R}^m$ control inputs
+*   $\mathbf{A} \in \mathbb{R}^{n \times n}$ state matrix
+*   $\mathbf{B} \in \mathbb{R}^{n \times m}$ input matrix
+*   $\mathbf{C} \in \mathbb{R}^{l \times n}$ output matrix
+*   $\mathbf{D} \in \mathbb{R}^{l \times m}$ feedforward matrix
+
+If matrices A, B, C, D are time-independent, then we call such systems \textbf{time-invariant.} 
+
+More frequently we work with systems when the output does not depend on conrol. 
+
+\begin{equation}
+    \begin{cases}
+    \mathbf{\dot{x}}=\mathbf{A}\mathbf{x} + \mathbf{B}\mathbf{u} \\
+    \mathbf{y}=\mathbf{C}\mathbf{x}
+    \end{cases}
+    \end{equation}
+
+State vector, 
+Control vector
+
+
+Input vector

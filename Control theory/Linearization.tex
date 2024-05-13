@@ -1,86 +1,146 @@
-% Linear models occur only in specific cases: DC motors. mass-spring damper, 3D-printer.
-% Most real-world systems are non-linear. 
+While linear models are present in the real world (examples include DC motors, 3D printers, and mass-spring-damper systems), the majority of real-world systems are nonlinear (such as cars, airplanes, robot arms, underwater robots, and almost any mechanical system with linkages).
 
-% \textit{\textbf{Taylor expansion around node.}}
+However, there is a method to describe these systems using our toolkits - through linearization.
 
-% Let's consider a non-linear dynamical system $\dot x = f(x, u)$ and a trajectory $x_0 = f(x_0, u_0)$
+\begin{equation*}
+    \boxed{\textbf{Linearization}} \text{ is the technique that enables us to create a linear model for a nonlinear system.}
+\end{equation*}
 
-% Node - any position at which robot remains static. 
+So, we can introduce linear models for nonlinear systems that could describe the system pretty well locally. We can do control for this local approximation. 
 
-% Physical meaning: node is any position where the robot remains static.
+\subsection{Taylor expansion}
 
-% The main "magic" aboout the node happens with $u_0$, which is the control that enables the robot to be static. 
-% \[A = \dfrac{\partial f}{\partial x}\]
+\begin{center}
+    \textit{\textbf{Taylor expansion around node.}}
+\end{center}
 
+Let's consider a non-linear dynamical system $\dot{x} = f(x, u)$ and a Taylor expansion around the node $(x_0, u_0)$, i.e., 
+$f(x_0, u_0) = 0$, $x_0 = \text{const}$, $u_0 = \text{const}$. 
 
+\underline{Recall} the physical meaning of a \textbf{node}: it is any position at which the robot remains static. 
 
-% \textit{\textbf{Taylor expansion along a trajectory.}}
+\[
+    f(x, u) \approx f(x_0, u_0) + \frac{\partial f}{\partial x} (x-x_0) + \frac{\partial f}{\partial u} (u-u_0) + \text{HOT}
+\]
 
-% Consider a non-linear dynamical system:
-% $\dot  x = f(x, u)$ and a trajectory
+HOT = high-order terms. \\
 
-% \[f(x, u) \approx f(x_0, u_0) + \dfrac{\partial f}{\partial x} (x - x_0) + \dfrac{\partial f}{\partial f} (u - u_0) + \text{H.O.T}\]
+$(x_0, u_0)$ are an expansion point.
 
-% Since $\dot e = \dot \xi - \dot x_0$, we re-werite:
+Now let's introduce new variables $e$ and $v$ that represent the distances from the expansion point:
 
-% \[\dot e = Ae + Bv + \text{H.O.T}\]
+\[
+e = x - x_0
+\]
+\[
+\dot{e} = \dot{x}
+\]
+\[
+v = u - u_0
+\]
 
-% Let's drop the high-order term and obtain linearization. 
+Then we can rewrite the Taylor expansion:
+\[
+    \dot e \approx \frac{\partial f}{\partial x} e + \frac{\partial f}{\partial u} v + \text{HOT}
+\]
 
-% \[\dot e = Ae + Bv\]
-
-% Expansion around the Node and expansion around trajectory stay the same, nothing actually changes. 
-
-
-
-% If we drop the higher-order terms from the Taylor expansion, we obtain linearization of the system dynamics. 
-
-% \[\dot e = Ae + Bv\]
-
-% Nothing changes between expansion around a node and expansion along a trajectory. 
-% The original function and the local approximation behave in the same way in the region.
-% However, the change of variables is different
-
-% So, can we linearaze around each and any point?
-
-% 1) If it is a node - yes. 
-% 2) If we want to linearize around some other point - yes, but the chnage of variables would entail slightly 
-% different results. 
-
-% While we had:
-% \[ e = x - x_0, \dot e = \dot x\], now
-% $\dot e$ is the differrence between the derivative of the state of our non-linear system and derivative of the state of our trajectory distance from the trajectory linearization.  
-
-% The meaning of the variables changes slightly, but the mathematical expression is the exact same expression. 
+\[
+    \dot e \approx A e + B v + \text{HOT}
+\]
 
 
-% \textbf{Affine expansion}
-
-% The other way to obtain linearization, without change of varibales is as follows. 
-
-% \[f(x, u) \approx f(x_0, u_0) + A(x-x_0) + B(u-u_0) \]
-
-% Denoting \[f(x_0, u_0) - Ax_0 - Bu_0 = c\]
-
-% \[\dot x = Ax+ Bu+ c\]
-% c makes it not a linear model, but affine, which means it has a constant term.
-
-% It can be a constant in the case of a node, \omegar a function of time in the case of expansion along the trajectory.
+Let's drop the high-order term and get an approximation. And this approximation is called \underline{linearization}. 
 
 
-% Often we choose u to compensate c, so u will also be affine in this case. 
+\[\dot e = Ae + Bv\]
+
+In this context, $(x_0, u_0)$ is a linearization point. 
+
+This type of linearization is proved to provide the best possible linear model for the given system.
+
+\begin{center}
+    \textit{\textbf{Taylor expansion along a trajectory.}}
+\end{center}
+
+Now let's consider a non-linear dynamical system:
+\[\dot x = f(x, u)\] and a trajectory $x_0 = f(x_0, u_0)$. Note that now $x_0$ is not a point - it is a whole trajectory
 
 
-% Manipulator equations (describe ???)
+\[
+    f(x, u) \approx f(x_0, u_0) + \frac{\partial f}{\partial x} (x-x_0) + \frac{\partial f}{\partial u} (u-u_0) + \text{HOT}
+\]
+
+We can denote $\dot e = \dot x - \dot x_0 = f(x, u) - f(x_0, u_0)$. 
+
+The rest stays the same: $e = x - x_0, v = u - u_0$
+
+\[
+    \dot e \approx A e + B v + \text{HOT}
+\]
+
+Let's drop HOT and obtain linearization:
+
+\[
+    \dot e = A e + B v 
+\]
 
 
-% Cars, underwater robots are desccribed by the other equations - Euler or Lagrangian equaitons. 
 
-% Consider  Manipulator equation - quadratic, symmetric, another form of kinetic energy. 
-% \[ \]
+Basically, nothing changes between expansion around a node and expansion along a trajectory as long as we introduce the change of variables described above. 
+The change of variables is slightly different, but original function and the local approximation behave in the same way in the region of the linearization point.
 
-% H - generalized inertia matrix 
-% \[x = \vec{q - q_0}\]
+
+So, can we linearize around each and any point?
+
+1) If it is a node - yes. 
+
+2) If we want to linearize around some other point - yes, but the chnage of variables would entail slightly 
+different results. 
+
+While we had:
+\[ e = x - x_0, \dot e = \dot x,\] now
+$\dot e$ is the differrence between the derivative of the state of our non-linear system and derivative of the state of our trajectory distance from the trajectory linearization.  
+
+The meaning of the variables changes slightly, but the mathematical expression is the exact same expression. 
+
+
+\begin{center}
+    \textbf{\textit{Affine expansion}}
+\end{center}
+
+The other way to obtain linearization, without change of varibales is as follows. 
+
+\[f(x, u) \approx f(x_0, u_0) + A(x-x_0) + B(u-u_0) \]
+
+Denoting \[f(x_0, u_0) - Ax_0 - Bu_0 = c\]
+
+\[\dot x = Ax+ Bu+ c\]
+
+c makes it not a linear model, but affine, which means it has a constant term.
+
+It can be a constant in the case of a node, and a function of time in the case of expansion along the trajectory.
+
+
+Often we choose u to compensate c, so u will also be affine in this case. 
+
+\subsection{Manipulator equations}
+
+Frequently, in robotics we deal with the following equation when describing a system:
+
+\[H \ddot q + C \dot q  + g = \tau \] which is called a \textbf{manipulator equation}
+
+
+However, cars, underwater robots are usually described by the other equations - Euler or Lagrangian equaitons. 
+
+Let's derive linearization for the manipulator equation. 
+
+Begin by proposing new variables: 
+
+\[x = \vec{q - q_0}, \vec{\dot q - \dot q_0}\]
+\[u = \tau - \tau_0\]
+
+Points around which we linearize are denoted from equation:
+\[\]
 
 % \[\] 
 
@@ -88,17 +148,17 @@
 % For any mechanical system, H happens to be always invertible. 
 
 
-% Let's introduce 
+Let's introduce 
 
-% \[\phi() = H^-1 (\tau - C \dot q - g)\]
+\[\phi(\dot q, q, t) = H^{-1} (\tau - C \dot q - g)\]
 
-% mechanical systems are second-order systems, while the state space is a 1st order system. 
-% d\dt() = 
+% % mechanical systems are second-order systems, while the state space is a 1st order system. 
+% % d\dt() = 
 
-% Let's replace $d\dt()$ with $\dot x$. 
+% % Let's replace $d\dt()$ with $\dot x$. 
 
-% State matrices are:
-% A = []
+% % State matrices are:
+% % A = []
 
 
 % \[\dfrac{\partial \phi}{\partial q} = H{-1} (\dfrac{\partial C \dot q}{\partial q} -\dfrac{})\]

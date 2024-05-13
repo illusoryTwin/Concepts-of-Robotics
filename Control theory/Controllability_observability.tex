@@ -1,3 +1,8 @@
+Not always can we control the system. The same applies to an observer. Sometimes, we cannot obtain the 
+full information that we desire from the system.
+
+Let's suggest the tools which can inform us whether we can succeed in designing a controller or observer or not.\\
+
 
 \noindent\fbox{%
 \begin{minipage}{\textwidth}
@@ -15,35 +20,133 @@ A system is observable on \(t_0 \leq t \leq t_f\) if any initial state \(x_0\) i
 \end{minipage}%
 }
 
+\noindent\fbox{
+\textbf{Cayley-Hamilton Theorem}:
 
-Observability criterion
+A matrix $M$ satisfies its own characteristic equation.
+}
 
 
+A characteristic equation can be written like:
+\[
+\lambda^{n} + a_{n-1}\lambda^{n-1} + a_{n-2}\lambda^{n-2} + \ldots + a_0 = 0
+\]
 
+So,
+\[
+M^{n} + a_{n-1}M^{n-1} + a_{n-2}M^{n-2} + \ldots + a_0 I = 0
+\]
+
+Meaning that $M^{n}$ is a linear combination of $M^{n-1} + M^{n-2} + \ldots + I$.
+Remember that if the system is controllable, we would be able to find such controller to the system, whcih would make the system stable, which means that the error goes to zero.
+
+
+\subsection{Controllability of Discrete LTI}
 Consider discrete LTI.
+
+\[x_{i+1} = Ax_i + Bu_i\]
+
+Let's expand it numerically:
+
+\[x_2 = Ax_1 + Bu_1\]
+\[x_3 = Ax_2 + Bu_2 = A(Ax_1 + Bu_1) + Bu_2 = A^{2}x_1 + ABu_1 + Bu_2\]
+
+\begin{center}
+    \dots
+\end{center}
+
+\[x_{n+1} = A^{n}x_1 + A^{n-1}Bu_1 + ... + A^{n-k}Bu_k +...+ Bu_n\]
+
+
+\[
+x_{n+1} - A^{n}x_1 = \begin{bmatrix} B & AB & A^2B \end{bmatrix} \begin{bmatrix} u_n \\ u_{n-1} \\ \vdots \\ u_1 \end{bmatrix}
+\]
+
+Thus, we showed that $x_{n+1} - A^{n}x_1$ must be in the column space of $C = \begin{bmatrix} B & AB & A^2B \end{bmatrix}$
+
+Now, note that since \( x_{n+1} \) can be any real number and \( x_1 \) can take a zero value, \( \mathbb{R} \) must be in the column space of C.
+So, C must be a full-rank matrix. 
+
+
+\begin{tcolorbox}[colback=green!10,colframe=green!50!black,title=\textbf{Controllability}]
+    A system $x_{i+1} = Ax_i + Bu_i$ is controllable (or any state can be reached) if $C = \begin{bmatrix} B & AB & A^2B \end{bmatrix}$
+    is full row rank.
+\end{tcolorbox}
+
+
+\subsection{Observability of Discrete LTI}
+
+Observability criterion shows whether it is in principle possible to estimate the system or not. 
+
+
+Consider a discrete LTI:
+\[
+\begin{cases}
+    x_{i+1} = Ax_i + Bu_i \\
+    y_i = Cx_i
+\end{cases}
+\]
 
 And a Luenberger observer:
 
-\[\]
+\[
+\hat{x}_{i+1} = A\hat{x}_i + Bu_i + L(y_i - C \hat{x}_i)
+\]
 
-Error dynamics for the observer. 
+Change of variables: $e_i = \hat{x}_i - x_i$ will provide us with the following equation:
+
+\[
+e_{i+1} = Ae_i + L(y_i - C \hat{x}_i)
+\]
+\[
+e_{i+1} = Ae_i - LCe_i
+\]
+
+Introduce the dual system (which is stable iff the original system is stable):
+
+\[
+\epsilon_{i+1} = A^T\epsilon_i - C^T L^T\epsilon_i
+\]
+
+\[
+\begin{cases}
+    \epsilon_{i+1} = A^T \epsilon_i - C^T v_i \\
+    v_i = - L^T \epsilon_i
+\end{cases}
+\]
+
+Controllability matrix for the system:
+
+\[O^T = \begin{bmatrix} C^T & A^T C^T ... & {A^T}^{n-1} C^T \end{bmatrix}\]
+\[O = \begin{bmatrix} C \\ CA \\ ... \\ CA^{n-1} \end{bmatrix} \]
 
 
-If the system is controllable, we would be able to find such controller to the system, whcih would make the system stable, which means that the error goes to zero.
+
+\begin{tcolorbox}[colback=green!10,colframe=green!50!black,title=\textbf{Observability}]
+    A system $x_{i+1} = Ax_i + Bu_i$ is \textbf{observable} (or observation error can go to 0 from any initial position) if $O = \begin{bmatrix} C \\ ... \\CA \\ CA^{n-1} \end{bmatrix}$
+    is full column rank.
+\end{tcolorbox}
 
 
-\[O^T = [C^T (A^T)C^T]\]
-
-
-Observability matrix
-
-error dynamics need to be stabilized, which means thta it needs t be controllable.
-
-Observability criterion.
-
-
-Needs to be full column rank.
+% error dynamics need to be stabilized, which means thta it needs t be controllable.
 
 
 
-\section{PBH controllability criterion}
+% Error dynamics for the observer. 
+
+
+
+
+% \[O^T = [C^T (A^T)C^T]\]
+
+
+% Observability matrix
+
+
+
+
+% Needs to be full column rank.
+
+
+
+% \section{PBH controllability criterion}
