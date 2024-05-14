@@ -107,7 +107,7 @@
 The main tasks of control theory include \textbf{\underline{control design}}, \textbf{\underline{trajectory tracking}}, and \textbf{\underline{point-to-point control}}.
 
 
-\subsection*{Control Design}
+\subsection{Control Design}
 
 \begin{tcolorbox}[colback=green!10,colframe=green!50!black,title=\textbf{Dynamical Systems}]
     The task of \textbf{stabilizing control} is defining the control law that makes a certain solution of 
@@ -130,7 +130,7 @@ Then, the closed-loop system can be represented as:
 
 The system is asymptotically stable if the eigenvalues of the matrix \(A - BK\) have strictly negative real parts.
 
-\subsection*{Trajectory Tracking}
+\subsection{Trajectory Tracking}
 
 The task is to stabilize the system around a reference trajectory.
 
@@ -148,7 +148,7 @@ To stabilize the system, suggest \(v = -Ke\), then:
 Therefore, the control law becomes:
 \[u = u^* + K(x^* - x).\]
 
-\subsection*{Point-to-Point Control}
+\subsection{Point-to-Point Control}
 
 Point-to-point control differs from trajectory tracking in that the reference input is constant, \(x^* = \text{const}\), and feed-forward control is also constant, \(u^* = \text{const}\).
 

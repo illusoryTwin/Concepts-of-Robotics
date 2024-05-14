@@ -1,1 +1,149 @@
 \section{Laplace Transform}
+
+\subsection{Laplace Transform}
+
+The Laplace transform is an integral transform that converts a function of a real variable \(t\) (time domain) to a function of a complex variable \(s\) (frequency domain). 
+The Laplace transform is a tool for solving differential equations by transforming them into algebraic equations.
+
+\textbf{The Laplace transform }of a function \(f(t)\) is given as:
+\begin{equation}
+    F(s) = \mathcal{L} \{ f(t)\} = \int_0^\infty f(t) e^{-st}dt
+\end{equation}
+
+where \(F(s)\) is called an \textbf{image} of the function and \(s=\alpha +\beta i \) is a complex frequency.
+
+Laplace transform is defined as transformation from the time domain \(t\) to the frequency domain \(s\).
+
+\subsubsection{Some Useful Properties}
+
+Linear properties:
+\begin{equation}
+    {\mathcal {L}}\{f(t)+g(t)\}={\mathcal {L}}\{f(t)\}+{\mathcal {L}}\{g(t)\}
+\end{equation}
+
+\begin{equation}
+    {\mathcal {L}}\{af(t)\}=a{\mathcal {L}}\{f(t)\}
+\end{equation}
+
+Final value theorem:
+\begin{equation}
+    f(\infty )=\lim _{s\to 0}{sF(s)}
+\end{equation}
+
+The final value theorem is useful because it gives the long-term behavior for a particular function.
+
+\subsubsection{Inverse Laplace Transform}
+
+The inverse Laplace transform transforms the image of your function \(F(s)\) from the frequency domain to the time domain \(x(t)\):
+\begin{equation}
+    f(t) = {\mathcal {L}}^{-1}\{F\}(t) = {\frac {1}{2\pi i}}\lim _{T\to \infty }\int _{\gamma -iT}^{\gamma +iT}e^{st}F(s)\,ds
+\end{equation}
+
+However, in practice, we mostly use precalculated Laplace transforms and then try to decompose the image \(X(s)\) into known transforms of functions obtained from a table, and construct the inverse by inspection, or just use some symbolic routines.
+
+\subsection{Laplace Transform of a Function's Derivative}
+
+For us, one of the most useful properties of Laplace transform is that if we apply it to the derivative of a given variable, it will result in the following:
+
+\begin{equation}
+    \mathcal{L}\left\{\frac{dx(t)}{dt}\right\} = s \mathcal{L}\left(x\right) = s X(s)
+\end{equation}
+
+which is true for \(x(0) = 0\).
+
+Thus, we can define a **derivative operator**:
+\begin{equation}
+    \frac{dx}{dt} \xrightarrow{\mathcal{L}} s X(s)
+\end{equation}
+
+The proof is as follows, using the definition of Laplace transform:
+\begin{equation}
+    \mathcal{L}\left\{\frac{dx}{dt}\right\} = \int_0^\infty \frac{dx}{dt} e^{-st}dt
+\end{equation}
+
+Then using integration by parts:
+\begin{equation}
+    \int_0^\infty \frac{dx}{dt} e^{-st}dt =  \left[x e^{-st} \right]_0^\infty - \int_0^\infty -se^{-st} x dt
+\end{equation}
+
+which yields:
+\begin{equation}
+    \left[x e^{-st} \right]_0^\infty + s\int_0^\infty e^{-st} x dt = x(0) + s\mathcal{L}\{x(t)\} = x(0) + sX(s)
+\end{equation}
+
+By induction, it can be shown that:
+\begin{equation}
+    {\mathcal {L}}\left\{\frac{d^{n}x}{dt^{n}}(t)\right\}=s^{n}\cdot {\mathcal {L}}\{x(t)\}+s^{n-1}x(0)+\cdots +x^{(n-1)}(0)
+\end{equation}
+
+\subsubsection{Applications to Linear ODEs}
+
+Let us consider the following ODE:
+\begin{equation}
+    a_{n}x^{(n)} +a_{n-1}x^{(n-1)}+...+a_{2}\ddot x+a_{1}\dot x + a_0 x= u_{m}b^{(m)} +b_{m-1}u^{(m-1)}+...+b_{2}\ddot u+b_{1}\dot u + b_0 u
+\end{equation}
+Notice that we introduce a new variable that we call the input \(u\) (control).
+
+Applying the inverse Laplace transform with zero initial conditions yields:
+\begin{equation}
+    a_{n}s^{(n)}X(s) +a_{n-1}s^{(n-1)}X(s)+...+a_{2} s^2 X(s)+a_{1}s X(s) + a_0 X(s) = b_{m}s^{(m)}U(s) +b_{m-1}s^{(m-1)}U(s)+...+b_{2}s^2 U(s)+b_{1}sU(s) + b_0 U(s)
+\end{equation}
+
+
+\subsubsection*{Example 1}
+\begin{equation}
+    \dddot y + a\dot y + by = u
+\end{equation}
+
+\begin{equation}
+    S^2 Y(S) + ASY(S) + BY(S) = U(S)
+\end{equation}
+
+\begin{equation}
+    Y(S) = \frac{1}{(S^2 + AS + B)} U(S)
+\end{equation}
+
+This form is called a \textbf{transfer function}. 
+
+\subsubsection*{Example 2}
+\begin{equation}
+    2 \dddot y + 5 \dot y - 40 y = 10 u
+\end{equation}
+
+\begin{equation}
+    2SY(S) - 4Y(S) = U(S)
+\end{equation}
+
+\begin{equation}
+    Y(S)(2S - 4) = U(S)
+\end{equation}
+
+\begin{equation}
+    Y(S) = \frac{1}{(2S - 4)} U(S)
+\end{equation}
+
+Consider the ODE with the input \(u\).
+
+\subsection{State-Space to Transfer Function}
+
+Let's study the relation between the input and the output of the dynamical system. 
+
+\[
+\begin{cases}
+    \dot x = Ax + Bu \\
+    y = Cx + Du
+\end{cases}
+\] 
+
+Let's consider the 1st equation and rewrite it in the form:
+\[SI X(S) = AX(S) + BU(S)\]
+\[(SI-A) X(S) = BU(S)\]
+\[X(S) = (SI-A)^{-1}BU\]
+
+Then the initial system can be rewritten in the following form:
+\[
+\begin{cases}
+    X = (SI-A)^{-1}BU\\
+    Y = C((SI-A)^{-1}B + D)U
+\end{cases}
+\]
