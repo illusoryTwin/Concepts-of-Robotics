@@ -1,7 +1,10 @@
 
+\section{Stability}
+
+
 \subsection{Critical Point (Node)}
 
-\begin{tcolorbox}[colback=blue!10,colframe=blue!50!blue,title=\textbf{Critical Point (Node)}]
+\begin{tcolorbox}[colback=green!10,colframe=green!50!black,title=\textbf{Critical Point (Node)}]
 Consider the following LTI:
 \[
 \dot{x} = f(\mathbf{x}, t)
@@ -10,18 +13,104 @@ Consider the following LTI:
 \end{tcolorbox}
 
 \subsection{Stability}
+\begin{tcolorbox}
 A system is stable if:
 \[
 \|x(0) - x_0 \| < \delta \quad \| x(t) -x_0\| < \epsilon
 \]
+\end{tcolorbox}
 
-% We can think of it as: if the starting point is in the \(\delta\)-neighborhood of the node \(x_0\), the rest of the trajectory \(x(t)\) is in the \(\epsilon\)-neighborhood of the node.
+We can think of it as: if the starting point is in the $\delta$-neighborhood of the node $x_0$, 
+the rest of the trajectory $x(t)$ is in the $\epsilon$-neighborhood of the node.
 
-% Or, the solutions starting from the \delta - ball do not diverge. 
+Or, the solutions starting from the $\delta$-sized ball do not diverge. 
 
-% \subsection{Asymptotic Stability}
+\subsection*{Asymptotic Stability}
 
-% A system is asymptotically stable if:
-% \[
-% \|x(0) - x_0 \| < \delta \quad \| x(t) -x_0\| < \epsilon
-% \]
+\begin{tcolorbox}
+A system is asymptotically stable if:
+\[
+\|x(0) - x_0 \| < \delta \to \lim_{t \to \infty} x(t) = x_0 
+\]
+\end{tcolorbox}
+
+For any initial point that lies in the \(\delta\)-sized ball, the trajectory will asymptotically approach the node (point $x_0$).
+Or, the solutions starting from the \(\delta\)-sized ball, converge to the node. 
+
+
+\subsection{Stability of autonomous LTI}
+
+\subsection*{\underline{Autonomous Systems}}
+
+A system is considered \underline{\textbf{autonomous}} if its evolution depends only on time.\\
+
+\underline{Example}
+
+\[
+\dot{x} = Ax
+\]
+
+\subsubsection{Diagonal matrices}
+
+Let's introduce a trick for autonomous Linear Time-Invariant (LTI) systems.
+
+First of all, recall the properties of a diagonal matrix and eigen-decomposition.
+\begin{itemize}
+    \item \textbf{Diagonal matrix}
+        \[\dot{z} = Dz\]
+        \[
+        \begin{cases}
+            \dot{x}_1 = d_1 x_1 \\
+            \dots \\
+            \dot{x}_n = d_n x_n
+        \end{cases}
+        \]
+        The solution of each of the equations is: \(x_i = C_i e^{d_i t}\).
+        So, the system is asymptotically stable when for all \(i\), \(d_i < 0\). 
+        The system is stable when \(d_i \leq 0\).
+    \item \textbf{Eigen-decomposition}\\
+        We can represent the matrix as \(A = VDV^{-1}\), where \(D\) is a diagonal matrix.
+\end{itemize}
+
+Given an autonomous Linear Time-Invariant (LTI) system, let's switch to the system with a diagonal matrix:
+
+\[
+\dot{x} = Ax
+\]
+
+\[
+\dot{x} = VDV^{-1}x
+\]
+
+\[
+V^{-1}\dot{x} = V^{-1}VDV^{-1}x = DV^{-1}x
+\]
+
+Change of variables: \(z = V^{-1}x\), \(\dot{z} = Dz\), 
+
+\[
+V^{-1}\dot{x} = Dz
+\]
+
+The system is asymptotically stable when for all the elements of \(D\) are \( < 0\). 
+The system is stable when the elements of \(D\) are \(\leq 0\).  
+
+\subsubsection{Upper triangular matrices}
+
+\begin{tcolorbox}[colback=white]
+    Eigenvalues of upper triangular matrices are the diagonal elements.
+\end{tcolorbox}
+    
+
+\subsubsection{General case}
+
+Consider the LTI:
+\[\dot x = Ax\]
+
+\begin{tcolorbox}[colback=green!10,colframe=green!50!black]
+    The system is called \textbf{stable} iff real parts of eigenvalues of A are non-positive.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=green!10,colframe=green!50!black]
+    The system is called \textbf{asymptotically stable} iff real parts of eigenvalues of A are  strictly negative. 
+\end{tcolorbox}
