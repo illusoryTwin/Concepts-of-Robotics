@@ -1,0 +1,149 @@
+\section{Discrete dynamics}
+
+Discrete case for dynamics:
+\[x_{i+1} = Ax_i +  Bu_i\]
+
+Such an equation is easy to work with: no derivatives are used here, it is easy to simulate. 
+
+For this system, we can propose the control: \[u_i = -Kx_i + u_i*\]
+\subsection{Stability}
+
+Let's consider the system:
+\[x_{i+1} = A x_i\]
+
+\[x_{i+1} = V^{-1}DV x_i\]
+\[V x_{i+1} = V V^{-1}DV x_i\]
+
+The change of variables:
+$z_{i} = V x_{i}$, $z_{i+1} = V x_{i+1}$
+
+\[z_{i+1} = DV z_i\]
+
+% The system will converge to 0 iff the eigenvalues of D: $\lambda_j < 1$. 
+Let's consider the following example:
+\[
+\begin{bmatrix}
+\vec{x}_{1,i+1} \\
+x_{2, i+1}
+\end{bmatrix}
+=
+\begin{bmatrix}
+\alpha & -\beta \\
+\beta & \alpha
+\end{bmatrix}
+\begin{bmatrix}
+x_{1, i} \\
+x_{2, i}
+\end{bmatrix}
+\]
+
+Let's find the norms of \(x_{i+1}\) and \(x_i\).
+
+\[
+\| \begin{bmatrix}
+x_{1, i} \\
+x_{2, i}
+\end{bmatrix}
+\|^2 = x_{1, i}^2 + x_{2, i}^2
+\]
+
+\[
+\| \begin{bmatrix}
+x_{1, i+1} \\
+x_{2, i+1}
+\end{bmatrix}
+\|^2 = \left| \begin{bmatrix}
+\alpha x_{1, i} - \beta x_{2, i} \\
+\beta x_{1, i} + \alpha x_{2, i}
+\end{bmatrix} \right|^2
+= (\alpha x_{1, i} - \beta x_{2, i})^2 + (\beta x_{1, i} + \alpha x_{2, i})^2
+= \beta^2 (x_{2,i}^2 + x_{1,i}^2) + \alpha^2 (x_{2,i}^2 + x_{1,i}^2)
+= (\alpha^2 + \beta^2) (x_{1, i}^2 + x_{2, i}^2)
+\]
+
+For stability we introduce:
+
+\textbf{Continuous case:} \underline{Hurwitz matrix}. \textbf{Discrete case:} \underline{Schur matrix}.
+
+\begin{tcolorbox}[colback=green!10,colframe=green!50!black,title=\textbf{Dynamical Systems}]
+    \begin{itemize}
+        \item Discrete system \(x_{i+1} = Ax_{i}\) is \textbf{stable} if and only if the absolute values of \(A\)'s eigenvalues are less than or equal to 1: \(|\lambda_i(A)| \leq 1\).
+        \item Discrete system \(x_{i+1} = Ax_{i}\) is \textbf{asymptotically stable} if and only if the absolute values of \(A\)'s eigenvalues are less than 1: \(|\lambda_i(A)| < 1\).
+    \end{itemize}
+\end{tcolorbox}
+
+\subsection{Analytical solution of Continuous LTI}
+
+\subsubsection*{\underline{Case: $\dot{x} = ax(t)$}}
+
+
+
+Recall that we can describe exponent as a series:
+\[e^{a} = 1 + a + \frac{a^2}{2} + \frac{a^3}{6} + \dots\]
+\[e^{A} = I + A + \frac{AA}{2} + \frac{AAA}{6} + \dots\]
+
+Suppose that the solution of the dynamical system is:
+\[x(t) = e^{at} x(0)\]
+\[x(t) = e^{At} x(0)\]
+Let's rewrite the exponent:
+\[x(t) = (I + At + \frac{AAt^2}{2} + \frac{AAAt^3}{6} + \dots) x(0)\]
+\[\dot x(t) = (A + AAt + \frac{AAAt^2}{2} + \dots) x(0)\]
+\[\dot x(t) = A(I + At + \frac{AAt^2}{2} + \dots) x(0)\]
+
+
+\[\dot x(t) = A e^{At} x(0)\]
+\[\dot x(t) = A x(t)\]
+
+
+\subsubsection*{\underline{Case: $\dot{x} = ax(t) + bu(t)$}}
+
+
+\[
+\dot{x} = ax(t) + bu(t)
+\]
+\[
+\dot{x} e^{-at} - ae^{-at} x(t) = b e^{-at} u(t)
+\]
+\[
+\frac{d}{dt} (x e^{-at}) = b e^{-at} u(t)
+\]
+\[
+\int_{0}^{t} \frac{d}{d\tau}(e^{-a(t-\tau)}x(\tau)) d\tau = \int_{0}^{t} \frac{d}{d\tau}(e^{-a(t-\tau)}b u(\tau)) d\tau
+\]
+\[e^{-at} x(t) - x(0) = \int_{0}^{t} e^{-a\tau} bu(\tau) d\tau\]
+\[x(t) = e^{at} x(0) + e^{at} \int_{0}^{t} e^{-a\tau} bu(\tau) d\tau\]
+
+\[x(t) = e^{at} x(0) + \int_{0}^{t} e^{a(t-\tau)} bu(\tau) d\tau\]
+
+\begin{tcolorbox}[colback=white]
+\[x(t) = e^{At} x(0) + \int_{0}^{t} e^{A(t-\tau)} Bu(\tau) d\tau\]
+\end{tcolorbox}
+
+
+\subsection{Discretization}
+\[
+\begin{cases}
+    x_0 = x(0) \\
+    x_1 = x(\Delta t) \\
+    x_2 = x(2\Delta t) \\
+    \dots \\
+    x_n = x(n\Delta t)
+\end{cases}
+\]
+
+\[\dot{x} = \frac{1}{\Delta t}(x_{i+1} - x_i)\]
+\[Ax_i= \frac{1}{\Delta t}(x_{i+1} - x_i)\]
+\[x_{i+1} = Ax_i \Delta t + x_i\]
+
+\begin{tcolorbox}
+\[x_{i+1} = (A\Delta t + I) x_i\]
+\end{tcolorbox}
+
+or
+
+\begin{tcolorbox}
+\[x_{i+1} = (I - A\Delta t)^{-1} x_i\]
+\end{tcolorbox}
+
+Thus, the discrete state matrix is: \(A_d = A\Delta t + I\)
+The control matrix is: \(B\Delta t\).
