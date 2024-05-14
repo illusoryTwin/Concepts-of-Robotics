@@ -1,27 +1,63 @@
-In literature, the system is frequently called a Plant, which in our case is a robot. 
+\section{Filters}
 
-\underline{Static system} 
+In literature, the system is frequently called a Plant, which in our case is actually a robot. 
 
-Static systemns are linear systems for whhich the relation between input and output is constant
+
+\begin{tcolorbox}[colback=green!10,colframe=green!50!black,title=\textbf{Static system}]
+    Linear systems for which the relation between input and output is constant are called \textbf{static systems}.
+\end{tcolorbox}
+
+
+\underline{Example}
+
+(Laplace domain) $Y(s) = 10X(s)$. 
+
+Note that when we are talking about independency on time not the signal, but the relation has to be time-independent. 
+
+
+\begin{tcolorbox}[colback=green!10,colframe=green!50!black,title=\textbf{Dynamic system}]
+    Dynamic systemns are linear systems for whhich the relation between input and output depends on time. 
+\end{tcolorbox}
 
 \underline{Dynamic system} 
+\underline{Example 1}
+State-space plant:
+\[
+\begin{cases}
+    \dot x = Ax + Bu \\
+    y = Cx 
+\end{cases}    
+\]
 
-Dynamic systemns are linear systems for whhich the relation between input and output depends on time. 
+Apparently, the output $y$ does not depend on the input $u$. 
 
-In Laplace domain,  plant 
-$Y(S) = $
+\underline{Example 2}
 
-Time does not appear in this equaiton, but if we rewrite it into ode form,
+Laplace plant:
+$Y(S) = \frac{1}{s^2 + 2s + 7} X(s)$
+Time does not appear in this equaiton, but if we rewrite it into ode form:
+\[\ddot y + 2 \dot y + 7 y = x\]
 
+\underline{Example 3}
+ODE plant:
 \[\ddot y + 5\dot y + y = u\]
+
+
 
 For these systems, the output depends not only on the current (time-wise) value of input, but on the entire history of input values.
 
 
 Static systems form algebraic linear equaitons. Dynamical systems create linear differential equaitons
 
+Dynamic systems have \textbf{state}, which changes over the time. 
 
 For the system we can create the controller and Luenbberger observer:
 
+% D_k is a fit-through term
 
-\[\]
+% \[\]
+
+% \begin{itemize}
+%     \item High-pass filters
+%     \item Low-passs filters
+% \end{itemize}

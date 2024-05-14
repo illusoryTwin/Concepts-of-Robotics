@@ -1,0 +1,38 @@
+\section{Bode}
+
+By steady-state we mean that initial conditoins have stopped playing a role.
+After some time passed we expect the output of the system to not depend on the initial conditions, but on the input. 
+
+Consider a system:
+\[Y(s) = G(s)U(s),\]
+$G(s)$ is a transfer function, $U(s)$ is a Laplace space input. 
+
+$u(t) = sin(\omega t)$ in time domain takes form $\frac{\omega}{\omega^2 + s^2}$ in  Laplace domain.
+
+\[Y(s) = G(s) \frac{\omega}{\omega^2 + s^2}\], 
+
+If a transfer function is a rational fraction, it can be reprresented in the following way:
+
+\[G(s) = \dfrac{n(s)}{(s+p_1)(s+p_2) + \dots + (s+p_n)} = \dfrac{r_1}{s+p_1} + \dots + \dfrac{r_n}{s+p_n}\]
+$p_i$ in this equations are the \textbf{poles}. 
+
+Previously, we introduced the stability analysis based on eigenvalues, but there is an equvivalent analysis based on poles. 
+
+
+A Bode plot usually consists of magnitude and phase response of a transfer function.
+
+Transfer functions in s-domain quickly become cumbersome to analyse as the control system gets complicated. It’s easy to understand the critical properties of the system by looking at the Bode plot.
+
+% Bode plot shows the magnitude of gain vs frequency
+% It shows the frequency point at which the gain starts to roll off (called cut off frequency). It gives you the information of the steady state frequency region in which you can operate your control system with good gain.
+% The phase and magnitude response of the loop gain of the control system shows if the system can remain stable at all frequencies of operation. If it is stable, it shows how much margin we have before the system gets unstable. (Phase margin/Gain margin)
+
+
+
+
+
+% **Bode plot** is a graph of the frequency response of a system. It is usually a combination of a *Bode magnitude plot*, expressing the magnitude (usually in decibels) of the frequency response, and a *Bode phase plot*, expressing the phase shift.
+
+% The ***Bode magnitude plot*** is the graph of the function $|\mathbf{G}(s=j\omega )|$ of frequency $\omega$  (with $j$ being the imaginary unit). The $\omega$-axis of the magnitude plot is logarithmic and the magnitude is given in decibels, i.e., a value for the magnitude $|\mathbf{G}|$ is plotted on the axis at $20\log _{10}|\mathbf{G}|$.
+
+% The ***Bode phase plot*** is the graph of the phase, commonly expressed in degrees, of the transfer function $\arg \left(\mathbf{G}(s=j\omega )\right)$ as a function of $\omega$ . The phase is plotted on the same logarithmic $\omega$-axis as the magnitude plot, but the value for the phase is plotted on a linear vertical axis.

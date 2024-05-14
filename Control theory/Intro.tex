@@ -1,14 +1,14 @@
 
 \section{Introduction}
 \begin{tcolorbox}[colback=green!10,colframe=green!50!black,title=\textbf{Dynamical systems}]
-    Let's consider the nth-order ordinary differential equation (ODE):
-    \[\mathbf{x}^{(n)}=\mathbf{f}(\mathbf{x}^{(n-1)},\mathbf{x}^{(n-2)},...,\ddot{\mathbf{x}},\dot{\mathbf{x}},\mathbf{x},t),\]
-    where $x(t)$ is a solutoin for the system, and $t$ is an independent variable (usually - time).
-    This equation is called \textbf{a dynamical system} and it represents a dynamics of the system.
-
+    Let's consider the \(n\)-th order ordinary differential equation (ODE):
+    \[
+    \mathbf{x}^{(n)} = \mathbf{f}(\mathbf{x}^{(n-1)}, \mathbf{x}^{(n-2)}, ..., \ddot{\mathbf{x}}, \dot{\mathbf{x}}, \mathbf{x}, t),
+    \]
+    where \(x(t)\) is a solution for the system, and \(t\) is an independent variable (usually time).
+    This equation represents the dynamics of the system and it is called a \textbf{dynamical system}.\\
+    x is called the \textbf{state} of the dynamical system.
 \end{tcolorbox}
-
-State of 
 
 
 In canonical form, linear ODE is represented in the following way:
@@ -16,8 +16,52 @@ In canonical form, linear ODE is represented in the following way:
 
 The set $\{ \mathbf{x}, \ \dot{\mathbf{x}} \ ..., \ \mathbf{x}^{(n-1)} \}$ is called the \textbf{state  of the system}.
 
+\textbf{State} of the system is a minimal set of variables that describe the system. Based on the current state and future inputs,
+we can predict the behaviour of the system. \\
 
-In case if relationships between state, output and control is **linear**, we can formulate the model of system in following form:
+\subsection{Introducing input}
+General form of an n-th order linear ODE with an input can be presented as follows:
+%
+\begin{equation}
+    a_n y^{(n)} + 
+    ... +
+    a_2 \ddot{y} + a_1 \dot{y} + 
+    a_0 y = u(t)
+\end{equation}
+
+\bigskip
+
+State-space representation of a linear system with an input is:
+%
+\begin{equation}
+    \dot x = Ax + Bu
+\end{equation}
+
+$A$ is called a \textbf{state matrix} and x is a \textbf{state vector}, 
+
+$B$ is called a \textbf{control matrix} and $u$ is a \textbf{control vector}.
+
+$u$ might be either a scalar or a vector.
+
+\subsection{Introducing output}
+Equations might also have an output, which can have plenty of physical meanings and interpretations. Let's list some of them:
+what we measure (position and orientation of a motor), what we want to control (the height of the quadrotor).
+
+Output is usually defined as $y$. 
+
+Example of system wth input and output:
+
+\begin{equation}
+    \begin{cases}
+    \mathbf{\dot{x}}=\mathbf{A}\mathbf{x} + \mathbf{B}\mathbf{u} \\
+    \mathbf{y}=\mathbf{C}\mathbf{x}
+    \end{cases}
+\end{equation}
+
+If $u$ and $y$ are scalars, the system is called \emph{single-input single-output (SISO)}, if they are vectors - \emph{multi-input multi-output (MIMO)}.
+
+\subsection*{Linear systems}
+In case if relationships between state, output and control are linear, we can model system in following form:
 \begin{equation}
 \begin{cases}
 \mathbf{\dot{x}} =\mathbf{A}\mathbf{x} + \mathbf{B}\mathbf{u} \\
@@ -25,18 +69,22 @@ In case if relationships between state, output and control is **linear**, we can
 \end{cases}
 \end{equation}
 
-where
-*   $\mathbf{x} \in \mathbb{R}^n$ states of the system
-*   $\mathbf{y} \in \mathbb{R}^l$ output vector
-*   $\mathbf{u} \in \mathbb{R}^m$ control inputs
-*   $\mathbf{A} \in \mathbb{R}^{n \times n}$ state matrix
-*   $\mathbf{B} \in \mathbb{R}^{n \times m}$ input matrix
-*   $\mathbf{C} \in \mathbb{R}^{l \times n}$ output matrix
-*   $\mathbf{D} \in \mathbb{R}^{l \times m}$ feedforward matrix
+
+Where
+\begin{itemize}
+    \item $\mathbf{x} \in \mathbb{R}^n$: states of the system
+    \item $\mathbf{y} \in \mathbb{R}^l$: output vector
+    \item $\mathbf{u} \in \mathbb{R}^m$: control inputs
+    \item $\mathbf{A} \in \mathbb{R}^{n \times n}$: state matrix
+    \item $\mathbf{B} \in \mathbb{R}^{n \times m}$: input matrix
+    \item $\mathbf{C} \in \mathbb{R}^{l \times n}$: output matrix
+    \item $\mathbf{D} \in \mathbb{R}^{l \times m}$: feedforward matrix
+\end{itemize}
+
 
 If matrices A, B, C, D are time-independent, then we call such systems \textbf{time-invariant.} 
 
-More frequently we work with systems when the output does not depend on conrol. 
+More frequently we work with systems when the output does not depend on control. 
 
 \begin{equation}
     \begin{cases}
@@ -45,8 +93,56 @@ More frequently we work with systems when the output does not depend on conrol.
     \end{cases}
     \end{equation}
 
-State vector, 
-Control vector
 
+    
+\subsection{ODE to State-Space conversion}
+\[
+\dddot{y} + a_2 \ddot{y} + a_0 y = u
+\]
+\[
+\begin{bmatrix}
+\dot{y} \\
+\ddot{y} \\
+\dddot{y}
+\end{bmatrix} = 
+\begin{bmatrix}
+0 & 1 & 0 \\
+0 & 0 & 1 \\
+-a_0 & -a_1 & -a_2
+\end{bmatrix}
+\begin{bmatrix}
+y \\
+\dot{y} \\
+\ddot{y}
+\end{bmatrix} + 
+\begin{bmatrix}
+0 \\
+0 \\
+u
+\end{bmatrix}
+\]
 
-Input vector
+\subsection{State-Space to ODE conversion}
+
+\[
+\begin{cases}
+\dot{x} = Ax \\
+y = Cx
+\end{cases}
+\]
+
+We need to represent this system as an ODE in the form:
+\[y^{(n)} = d_{n-1}y^{(n-1)} + d_{n-2}y^{(n-2)} + \dots + d_1 \dot{y} + d_0 \]
+
+Let's take the derivative of \(y\):
+\[\dot{y} = C\dot{x} = CAx\]
+\dots
+\[y^{(n)} = CA^{(n)} x\]
+
+\[y = \begin{bmatrix} C \\ CA \\ \dots \\ CA^{(n-1)} \end{bmatrix} x = Ox, \]
+
+\(O\) is called the \textbf{observability matrix}.
+
+\[x  = O^{-1} y \]
+Then, 
+\[y^{(n)} = CA^{(n)} x = CA^{(n)}O^{-1} y = CA^{(n)}O^{-1}  \begin{bmatrix} y \\ \dot{y} \\ \vdots \\ y^{(n-1)}\end{bmatrix}\]
