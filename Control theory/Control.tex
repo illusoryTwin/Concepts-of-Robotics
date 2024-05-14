@@ -109,7 +109,7 @@ The main tasks of control theory include \textbf{\underline{control design}}, \t
 
 \subsection{Control Design}
 
-\begin{tcolorbox}[colback=green!10,colframe=green!50!black,title=\textbf{Dynamical Systems}]
+\begin{tcolorbox}[colback=green!10,colframe=green!50!black,title=\textbf{Stabilizing control}]
     The task of \textbf{stabilizing control} is defining the control law that makes a certain solution of 
     a dynamical system stable.
 \end{tcolorbox}
@@ -129,6 +129,8 @@ Then, the closed-loop system can be represented as:
 \[\dot{x} = (A - BK)x.\]
 
 The system is asymptotically stable if the eigenvalues of the matrix \(A - BK\) have strictly negative real parts.
+
+Or, matrix $(A-BK) \in \mathcal{H}$ should be Hurwitz. 
 
 \subsection{Trajectory Tracking}
 
