@@ -1,81 +1,268 @@
-When the full state feedback is unavailablle, we introducce an observer to \underline{estimate} the state $x$.
-
-% https://courses.engr.illinois.edu/ece486/fa2018/handbook/lec22.html
+% \section{Observer}
 
 
+% When the full state feedback is unavailablle, we introducce an observer to \underline{estimate} the state $x$.
 
-We created a system with a controller, but how to check the current state of the system.
-
-We can try to estimate it with the measurements, for example form sensors. But in real life 
-the task is not that trivial due to some problems:
-
-\begin{enumerate}
-    \item Lack of sensors. For a quadrotor we can not measure the height straight forwardly 
-    \item Measurements can be imprecise or biased
-    \item Measurements can be only made in discrete time
-\end{enumerate}
-
-The key problem arises when the output of the system $y$ is not the whole state $x$, but $y = Cx$, which
-means that we are able to get the state partially.
-
-These are just several problems that create the difficulties for us to measure the state of the system. 
+% % https://courses.engr.illinois.edu/ece486/fa2018/handbook/lec22.html
 
 
-Let's introduce a new idea of how to introduce an observer in our system. 
 
+% We already know how to create a system with a controller, but how to check the current state of the system?
+
+% \[
 % \begin{cases}
-%     \dot x = Ax + Bu
-%     y = C \cdot x
-%     \hat x(t) = estimate  (y(t))
+%     \dot x = Ax + Bu\\
+%     u = -Kx
+% \end{cases}
+% \]
+
+% We can try to estimate it with the measurements, for example with sensors. But in real life 
+% the task is not that trivial due to some problems:
+
+% \begin{enumerate}
+%     \item Lack of sensors. For a quadrotor we can not measure the height straight forwardly 
+%     \item Measurements can be imprecise or biased
+%     \item Measurements can be only made in discrete time
+% \end{enumerate}
+
+% The key problem arises when the output of the system $y$ is not the whole state $x$, but $y = Cx$, which
+% means that we are able to get the state partially.
+
+% These are just several problems that create the difficulties for us to measure the state of the system. \\
+
+% \subsection{Measurement and estimation}
+
+% \[
+% \begin{cases}
+%     \dot x = Ax + Bu \\
+%     y = Cx \\
+%     \hat x(t) = estimate  (y(t)) \\
 %     u = -K \hat x
 % \end{cases}
+% \] 
 
-We estimate x $\hat x$ based on the history of y values. 
+% $x$ and $y$ are the state and output (actual or true).
+% When we do not know the exact state x, we can only estimate it. We estimate x ($\hat x$) based on the history of y values. The control law is now governed by the estimated state $\hat x$. \\
 
+% \begin{center}
+%     \textit{\textbf{Estimation error}}
+% \end{center}
 
-$x$ and $y$ are the state and outpuut (actual or true)
+% State estimation error is the following:
+% \[\epsilon = \hat x - x\]
 
-\textbf{Estimation error}
+% \subsection{Dynamics estimation}
 
-State estimation error:
-\[\epsilon = \hat x - x\]
+% We can always find $~ y = C \hat x - y = C \hat x - Cx = C \epsilon$. 
 
-But since we do not know x, we cannot compute this error $\epsilon$.
+% Let's suggest that the dynamics should also hold for the observed state:
+% \[\hat \dot x = A \hat x + Bu\]
 
-However, we can always find $~ y = C \hat x - y$. 
+% Let's introduce in our equation a linear correction law $-L ~y$. 
+% Since $~y = C \hat x - y$, we get:
 
-Let's suggest that the dynamics should also hold for the observed state:
-\[\hat \dot x = A \hat x + Bu\]
+% \begin{equation}{1}
+%     \hat \dot x = A \hat x + Bu + L(y - C \hat x) 
+% \end{equation}
 
-Let's introduce in our equation a linear correction law $-L ~y$. 
-Since $~y = C \hat x - y$, we get:
+% This is called Luenberger observer.  
 
-\begin{equation}
-    \hat \dot x = A \hat x + Bu + L(y - C \hat x) 
-\end{equation}
+% But how to find suitable observer gain $L$?
 
-This is called Luenberger observer.  
-
-But how to find suitable observer gain $L$?
-
-Let's subtract $\dot x = Ax + Bu$ from (?). The equation we got is the observer error dynamics:
+% Let's subtract $\dot x = Ax + Bu$ from \equation{1}. The equation we got is the observer error dynamics:
 
 % \begin{equation}
 %     \hat \dot x - \dot x = A \hat x - Ax + L(y - C \hat x)
 % \begin{equation}
 
+% \begin{equation}
+%     \hat \dot x - \dot x = A \hat x - Ax + L(Cx - C \hat x) = A \hat x - Ax + LC(x \hat x)
+% \begin{equation}
 
 % \begin{equation}
-    % \dot \epsilon = (A-LC) \epsilon
-% \end{equation}
+%     \dot \epsilon = A \epsilon - LC \epsilon = (A-LC) \epsilon
+% \begin{equation}
+
+
+\section{Observer}
+
+When the full state feedback is unavailable, we introduce an observer to \underline{estimate} the state \(x\).
+
+% https://courses.engr.illinois.edu/ece486/fa2018/handbook/lec22.html
+
+We already know how to create a system with a controller, but how to check the current state of the system?
+
+\[
+\begin{cases}
+    \dot x = Ax + Bu\\
+    u = -Kx
+\end{cases}
+\]
+
+We can try to estimate it with measurements, for example with sensors. But in real life, the task is not that trivial due to some problems:
+
+\begin{enumerate}
+    \item Lack of sensors. For a quadrotor, we cannot measure the height straightforwardly.
+    \item Measurements can be imprecise or biased.
+    \item Measurements can be only made in discrete time.
+\end{enumerate}
+
+The key problem arises when the output of the system \(y\) is not the whole state \(x\), but \(y = Cx\), which means that we are able to get the state partially.
+
+These are just several problems that create difficulties for us to measure the state of the system.
+
+\subsection{Measurement and estimation}
+
+\[
+\begin{cases}
+    \dot x = Ax + Bu \\
+    y = Cx \\
+    \hat x(t) = \text{estimate}(y(t)) \\
+    u = -K \hat x
+\end{cases}
+\]
+
+\(x\) and \(y\) are the state and output (actual or true). When we do not know the exact state \(x\), we can only estimate it. We estimate \(x\) (\(\hat x\)) based on the history of \(y\) values. The control law is now governed by the estimated state \(\hat x\).
+
+\begin{center}
+    \textit{\textbf{Estimation error}}
+\end{center}
+
+State estimation error is the following:
+\[
+\epsilon = \hat x - x
+\]
+
+\subsection{Dynamics estimation}
+
+We can always find \(y = C \hat x - y\).
+\[ y = C \hat x - y = C \hat x - Cx = C \epsilon\]
+
+Let's suggest that the dynamics should also hold for the observed state:
+\[
+\hat \dot x = A \hat x + Bu
+\]
+
+Let's introduce in our equation a linear correction law \( -L \, y\). Since \(y = C \hat x - y\), we get:
+
+\begin{equation}\label{eq:luenberger_obs}
+    \hat \dot x = A \hat x + Bu + L(y - C \hat x) 
+\end{equation}
+
+
+This is called the Luenberger observer.  
+
+But how to find a suitable observer gain \(L\)?
+
+Let's subtract \(\dot x = Ax + Bu\) from Equation  (\ref{eq:luenberger_obs}) . The equation we got is the observer error dynamics:
+
+\begin{equation}
+    \hat \dot x - \dot x = A \hat x - Ax + L(y - C \hat x)
+\end{equation}
+
+\begin{equation}
+    \hat \dot x - \dot x = A \hat x - Ax + L(Cx - C \hat x) = A \hat x - Ax + LC(x - \hat x)
+\end{equation}
+
+\begin{equation}
+    \dot \epsilon = A \epsilon - LC \epsilon = (A-LC) \epsilon
+\end{equation}
 
 
 With no knowledge of $x$ nad $\hat x$, we can define the stability of the system. 
 
-The observer $\dot \epsilon = (A - LC) \epsilon$ is stable. 
+What we want is the error converging to 0. To obtain this, the observer $\dot \epsilon = (A - LC) \epsilon$ needs to be stable. 
+$A-LC \in \mathcal{H}$.
+
+Recall:
+\begin{itemize}
+    \item Controller design: find such $K$ that $A-BK \in \mathcal{H}$.
+    \item Observer design: find such $L$ that: $A-LC \in \mathcal{H}$
+\end{itemize}
+
+But now the gain $L$ is in the left side for the  observer (unlike $K$ for the controller), so we cannot use any stabilization methods
+(LQR, pole placement) right away. 
+
+We need to introduce the following change (or, we can solve the \textit{dual problem}):
+find such L that:
+\[A^T - C^TL^T \in \mathcal{H}\]
+
+ANd  now, for this equation we can use LQR or poole-placement. 
 
 % \dot x = Ax 
 
+\subsection{Observer + Controller}
 
-\subsection{Luenberger Observer}
-Based on the output y, we wish to estimate input x.
+% \[
+% \begin{cases}
+%     \dot x = Ax + Bu \label{eq:state_eq} \\
+%     y = Cx \label{eq:output_eq} \\
+%     \hat x(t) = \text{estimate}(y(t)) \label{eq:estimate_eq} \\
+%     u = -K \hat x \label{eq:control_eq}
+% \end{cases}
+% \]
+
+% Let's substitute $u$ into (\ref{eq:state_eq}), $u$ and $y$ into (\ref{eq:state_eq})
+
+
+\[
+\begin{cases}
+    \dot x = Ax + BK \hat x \\
+    \hat \dot x = A \hat x - BK \hat x + LC(x - \hat x)
+\end{cases}
+\]
+
+
+\begin{equation}
+    \begin{cases}
+        \dot x = Ax + BK \hat x \label{eq:state_eq1} \\
+        \hat \dot x = A \hat x - BK \hat x - LC(\hat x - x) 
+    \end{cases}
+\end{equation}
+
+
+% \[
+% [\dot x \\ \hat \dot x] = [A & -BK \\ LC & A-BK-LC][x \\ \hat x]
+% \]
+
+Let's do a change of variables so that it would be easier to analyze the eigenvalues:
+$e = x - \hat x$, $\dot e = \dot x - \hat \dot x$. 
+Let's subtract (1) of  \ref{eq:state_eq1} from (2) of \ref{eq:state_eq1}:
+
+\[\dot e = A \hat x - BK \hat x - LC(\hat x - x) - Ax + BK \hat x \]
+\[\dot e = A e - LCe\]
+
+\begin{equation}
+    \dot e = (A-LC)e
+\end{equation}
+
+Now let's turn back to the equation 1 of the system and rewrite it. 
+\[\dot  x = Ax - BK \hat x = Ax - BK(x-e)\]
+
+\begin{equation}
+    \dot  x = (A-BK)x + BKe
+\end{equation}
+
+\[
+\begin{cases}
+    \dot e = (A - LC) e \\
+    \dot x = (A - BK)x + BKe
+\end{cases}
+\] 
+
+\[
+\begin{bmatrix}
+    \dot x \\ 
+    \dot e
+\end{bmatrix} = 
+\begin{bmatrix}
+    A-BK & BK \\ 
+    0 & A - LC
+\end{bmatrix} 
+\begin{bmatrix}
+    x \\ 
+    e
+\end{bmatrix}
+\]
+
+The eigenvalues of the system are the union of eigenvalues of $(A-  BK)$ and $(A-LC)$. 
