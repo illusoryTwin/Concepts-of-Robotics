@@ -1,3 +1,9 @@
+CHECK! 
+
+Without a Kalman filter, if your system is not observable, you won't be able to retrieve all the state variables xx from the output yy alone.
+By using a Kalman filter, you can estimate all the state variables xx even if they are not all directly observable in yy. The filter uses the 
+model of the system and the measurements to infer the values of the unobserved states.
+
 % The way we pick our initial state estimate does not have a bias.
 
 % Assume you could pick your initial state estimate $\hat x_0$ such that
