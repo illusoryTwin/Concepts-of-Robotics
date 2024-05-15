@@ -1,0 +1,188 @@
+\section{LQR}
+
+We can consider stability as a necessary requirement, but just because we are stable doesn't necessarily mean that we are performing at our best.
+How can we do the best control? This is the question of optimality. 
+
+There is also another way that we can think of LQR. In pole-placement method, we want to place the poles in the specific spots (or, we choose specific eigenvalues). But it is not intuitive where to place them, especially for complex systems, systems with numerous actuators.
+So, the new method is proposed. The key concept of the method lies in \underline{optimization} of choosing \(K\). 
+
+The optimal control aims to stabilize the system while minimizing the time spent in the process.
+
+In LQR we find an optimal \(K\) by choosing parameters that are important to us, specifically how well the system performs and how much effort it takes to reach this performance.
+
+% If \(Q>>R\), then we are turning the problem of 
+
+\subsection{Cost. Optimal cost}
+
+Let's introduce $u = \pi(x)$ - a \textbf{control policy}. It is like a recipe for obtaining $u$ when we know $x$ and $t$. Whereas control policy is a function, 
+control is its output. \\
+
+\underline{How to find the best control policy?}\\
+
+Let's introduce an \textbf{additive cost function \(J\)}:
+\[J(x_0, \pi(x, t)) = \int_{0}^{\infty} g(x, u), \]
+
+It basically means that at each time stamp, we always add to the cost. 
+
+$x_0 = x(0)$ in the equation is the initial conditions. 
+
+$g(x, u)$, \textbf{instantaneous cost}, is a subject of our choice. 
+
+Function $g(x, u) \geq 0$ can be interpreted as a rate of change of cost.
+
+Note that the additive cost function depends on the initial state $x_0$ rather than $x$ since the trajectory $x$  itself depends on initial conditions and control law. Consider an example with a robot arm that is supposed to grip an object. 
+If in the initial position this robot arm is far away from the object, then the control policy is to be high.
+
+
+Applying the optimal control policy $\pi^*(x)$ to the system $\dot{x} = f(x, u)$, we obtain optimal 
+dynamics $\dot{x} = f^*(x, u) = f(x, \pi^*(x))$. 
+
+Given initial condition $z = x_0$, we can obtain the optimal trajectory $x^* = x^*(t, z)$. 
+
+Knowing the optimal trajectory and the optimal control policy, we can calculate the optimal cost: $J^*(z) = J(z, \pi^*(x))$. 
+And the optimal instantaneous cost is: $g^*(x) = g(x, \pi^*(x))$. 
+
+
+Let $J^*$ be the optimal (lowest possible) cost. 
+
+\[ J^*(x_0) = \inf_{\pi} J(x_0, \pi(x, t)) \]
+
+We obtain this optimal cost via the optimal control policy $\pi = \pi^*(x, t)$.
+
+This is a key subject in our solution, since if we can find the optimal control policy, we can define the optimal 
+trajectory (recall that it depends on the policy and initial conditions). 
+
+
+\subsection{Optimality conditions}
+
+When is our policy the best policy? When is our cost the best cost?
+
+
+\textbf{Hamiltonian-Jacobi-Bellman (HJB)}
+
+\[\min_u [g(x, u) + \frac{dJ}{dx} f(x, u)] = 0\]
+
+We can see that $\frac{dJ}{dx} f(x, u)$ is a derivative of $J$ w.r.t $t$ (by the chain rule). 
+
+We can think of $g(x, u)$ as $\frac{\partial J}{\partial t}$. Thus, the HJB equation seems as an attempt to get the full derivative of $J$
+
+\[ u^* = \arg\min_u \left[ g(x, u) + \frac{dJ}{dx} f(x, u) \right] \]
+
+\subsection{Algebraic Riccati}
+
+For LTI, dynamics is:
+\[ \dot{x} = Ax + Bu \]
+We can choose quadratic cost:
+\[ g(x, u) = x^\top Qx + u^\top Ru \]
+\( R \) and \( Q \) are symmetric and positive-definite (CHECK!!! which is semi-definite) since we do not want the cost to be negative.
+
+
+Then HJB becomes:
+\[\]
+
+
+\[J^* = x^T S x\]
+
+\[\dfrac{\partial J^*}{\partial t} = \dot x^T S x + x^ T S \dot x\]
+
+\[\min_u [x^TQx + u^TRu + x^TS(Ax+Bu) +(Ax+Bu)^TSx] = 0\]
+
+After simplification:
+\[\min_u [x^T (Q + SA + A^TS)x + u^TRu + x^TSBu + u^TB^TSx] = 0\]
+
+Let's take its derivative w.r.t $u$ and set it to 0:
+\[2u^TR + 2x^TSB = 0\]
+
+\[u^TR + x^TSB = 0\]
+
+Let's transpose this equation and reconfigure it:
+
+\[R^T u =-B^TSx\]
+\[u = -(R^T)^{-1}B^TSx\]
+
+Recall that R is symmetric
+
+\[u = -R^{-1}B^TSx\]
+
+\begin{tcolorbox}
+    \text{The control law:}
+    \[ u = -R^{-1}B^T Sx \]
+    \text{is called \textbf{LQR (linear quadratic regulator)}}
+\end{tcolorbox}
+
+$u$ is proportional to $S$, which is a \textbf{cost-to-go}, $R$ is a cost matrix on the control actions. 
+
+\underline{How to define S?}
+
+Substituting the found optimal control back into the HJB, we get:
+
+\begin{equation}
+    \begin{split}
+    \underset{\mathbf{u}}{\min} \ 
+    [ 
+    \mathbf{x}^\top (
+    \mathbf{Q} + \mathbf{S} \mathbf{A} + \mathbf{A}^\top \mathbf{S}
+    )\mathbf{x}
+    +
+    \mathbf{x}^\top \mathbf{S} \mathbf{B} \mathbf{R}^{-1} \mathbf{R} \mathbf{R}^{-1} \mathbf{B}^\top \mathbf{S} \mathbf{x}
+    - \\
+    - 
+    \mathbf{x}^\top \mathbf{S} \mathbf{B} \mathbf{R}^{-1} \mathbf{B}^\top \mathbf{S} \mathbf{x}
+    - 
+    \mathbf{x}^\top\mathbf{S} \mathbf{B} \mathbf{R}^{-1} \mathbf{B}^\top \mathbf{S} \mathbf{x} 
+    ] = 0
+    \end{split}
+\end{equation}
+
+Simplifying, we get: 
+
+\begin{equation}
+    \mathbf{x}^\top (\mathbf{Q} + \mathbf{S} \mathbf{A} + \mathbf{A}^\top \mathbf{S}
+    - \mathbf{S} \mathbf{B} \mathbf{R}^{-1} \mathbf{B}^\top \mathbf{S}) \mathbf{x} = 0
+\end{equation}
+
+which would hold for all $\mathbf{x}$ iff:
+
+\begin{equation}
+    \mathbf{Q} - \mathbf{S} \mathbf{B} \mathbf{R}^{-1} \mathbf{B}^\top \mathbf{S} 
+     + \mathbf{S} \mathbf{A} + \mathbf{A}^\top \mathbf{S} = 0
+\end{equation}
+
+This is the \emph{\textbf{Algebraic Riccati equation}}.
+
+
+\subsection{LQR vs Pole-Placement}
+
+
+Pole-Placement: may require unreasonably high control gains. 
+LQR: easy to produce reasonable control gains. 
+
+
+
+
+
+
+
+Let's introduce the \textbf{cost-to-go} $V_i$ which represents a difference between the optimal cost and the incurred cost. 
+
+\[V_i = J^*(z) - S_i\]
+
+The function $V_i$ is monotonously decreasing with the rate  of change $-g^*(x)$. 
+
+Let \(J\) be an additive cost function:
+\[J(x_0, p(x, t)) = \int_{0}^{\infty} g(x, u), \]
+
+Intuition behind cost function: \(Q\) - how bad if \(x\) is not where it is supposed to be.
+\(Q\) - nonnegative, positive semidefinite.
+
+if the system is a positions, velocity, and \(Q = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 10 & 0 \\ 0 & 0 & 0 & 100 \end{bmatrix}\) we penalize for 
+
+Suppose there is the best control law:
+\[u = -kx\]
+
+that minimizes the quadratic cost function.
+
+\[J = \int x^T Q x + u^T R u\]
+
+Cost on effectiveness and energy to reach this effectiveness.
+The optimal control is supposed to make the system stable and spend on it as less time as possible. 

@@ -85,63 +85,13 @@
 \include{Bode.tex}
 \include{Discrete.tex}
 
+\include{LQR.tex}
 
-\section{LQR}
 
-\subsection{Intuition behind poles}
-In control theory, the system state-space equation
-
-\[\dot{x} = Ax+Bu\]
-
-\[y=Cx+Du\]
-
-has the transfer function
-
-\[G(s)=C(sI-A)^{-1}B+D.\]
-
-Since \((sI-A)^{-1}=\text{adj}(sI-A)\det(sI-A)\), where \(\text{adj}(sI-A)\) is the adjugate of \(sI-A\), the poles of \(G(s)\) are the numbers that satisfy \(\det(sI-A)=0\). This is exactly the characteristic equation of matrix \(A\), whose solutions are the eigenvalues of \(A\).
-
-\subsection{LQR}
-In pole-placement method, we want to place the poles in the specific spots (or, we choose specific eigenvalues). But it is not intuitive where to place them, especially for complex systems, systems with numerous actuators.
-So, the new method is proposed. The key concept of the method lies in optimization of choosing \(K\). 
-
-In LQR we find an optimal \(K\) by choosing parameters that are important to us, specifically how well the system performs and how much effort it takes to reach this performance.
-
-If \(Q>>R\), then we are turning the problem of 
-Let \(J\) be an additive cost function:
-\[J(x_0, p(x, t)) = \int_{0}^{\infty} g(x, u)\]
-\(Q\) - how bad if \(x\) is not where it is supposed to be.
-\(Q\) - nonnegative, positive semidefinite.
-
-if the system is a positions, velocity, and \(Q = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 10 & 0 \\ 0 & 0 & 0 & 100 \end{bmatrix}\) we penalize for 
-
-Suppose there is the best control law:
-\[u = -kx\]
-
-that minimizes the quadratic cost function.
-
-\[J = \int x^T Q x + u^T R u\]
-
-\textbf{Hamiltonian-Jacobi-Bellman (HJB)}
-
-\[\min_u [g(x, u) + \frac{dJ}{dx f(x, u)}] = 0\]
-
-Cost on effectiveness and energy to reach this effectiveness.
-
-\subsection{Subtopic 2.1}
-% Your content here
-
-\subsection{Subtopic 2.2}
-% Your content here
-
-% Add more sections and subsections as needed
-
-% End of content
 \include{Observer.tex}
 
 \include{Filters.tex}
 
-\section{Controllability. Observability}
 \include{controllability_observability.tex}
 
 

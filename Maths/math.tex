@@ -4,3 +4,18 @@ Skew symmetric is a square matrix for which holds the following property:
 \[A^T = -A\]
 
 \[A^T = -A, and B^T= -B, then we have (A + B)^T = -(A + B)\]
+
+
+
+\subsection{Intuition behind poles}
+In control theory, the system state-space equation
+
+\[\dot{x} = Ax+Bu\]
+
+\[y=Cx+Du\]
+
+has the transfer function
+
+\[G(s)=C(sI-A)^{-1}B+D.\]
+
+Since \((sI-A)^{-1}=\text{adj}(sI-A)\det(sI-A)\), where \(\text{adj}(sI-A)\) is the adjugate of \(sI-A\), the poles of \(G(s)\) are the numbers that satisfy \(\det(sI-A)=0\). This is exactly the characteristic equation of matrix \(A\), whose solutions are the eigenvalues of \(A\).

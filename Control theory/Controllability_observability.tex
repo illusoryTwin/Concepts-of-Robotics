@@ -1,3 +1,5 @@
+\section{Controllability. Observability}
+
 Not always can we control the system. The same applies to an observer. Sometimes, we cannot obtain the 
 full information that we desire from the system.
 
@@ -126,6 +128,29 @@ Controllability matrix for the system:
     A system $x_{i+1} = Ax_i + Bu_i$ is \textbf{observable} (or observation error can go to 0 from any initial position) if $O = \begin{bmatrix} C \\ ... \\CA \\ CA^{n-1} \end{bmatrix}$
     is full column rank.
 \end{tcolorbox}
+
+\subsection{Controllability of Continuous-time systems}
+
+\subsection{PBH controllability criterion}
+
+It is an alternative way to test whether the pair (A, B) is controllable. 
+
+
+\begin{tcolorbox}[colback=green!10,colframe=green!50!black,title=\textbf{PBH criterion}]
+    The task of \textbf{stabilizing control} is defining the control law that makes a certain solution of 
+    a dynamical system stable.
+\end{tcolorbox}
+
+
+
+
+% \begin{itemize}
+
+% \end{itemize}
+
+
+
+
 
 
 % error dynamics need to be stabilized, which means thta it needs t be controllable.
