@@ -1,0 +1,17 @@
+- Transformations
+- FK
+- IK
+- Differential kinematics
+- Trajectory
+    + different types (p-p, multiple points) 
+- FD
+- ID
+
+
+Spherical arm, spherical wrist
+Degrees of freedom
+Euler angles. Why?
+
+Notice that for the homogeneous transformation matrix the orthogonality
+property does not hold; hence, in general,
+A−1  = AT 

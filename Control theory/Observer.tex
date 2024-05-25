@@ -86,11 +86,28 @@
 
 \section{Observer}
 
-When the full state feedback is unavailable, we introduce an observer to \underline{estimate} the state \(x\).
+When it comes to applying control in real practice, how do we do it? Quite frequently, the full real state is unavailable to us. The only option is to try \textit{estimating} it. We can do this using sensors, cameras, for example.
+
+But in real life, the task is not that trivial due to some problems:
+
+\begin{enumerate}
+    \item Lack of sensors. For a quadrotor, we cannot measure the height straightforwardly.
+    \item Measurements can be imprecise or biased.
+    \item Measurements can only be made in discrete time.
+\end{enumerate}
+
+The key problem arises when the output of the system \(y\) is not the whole state \(x\), but \(y = Cx\), which means that we are only able to get a partial state.
+
+These are just several problems that create difficulties for us to measure the state of the system.
+
+This brings us to the motivation of introducing an observer to \underline{estimate} the state \(x\). With the observer, we will be able to check the current state of the system. \\
+
+We already know how to create a system with a controller, but how do we check the current state of the system?
+
 
 % https://courses.engr.illinois.edu/ece486/fa2018/handbook/lec22.html
 
-We already know how to create a system with a controller, but how to check the current state of the system?
+
 
 \[
 \begin{cases}
@@ -99,17 +116,6 @@ We already know how to create a system with a controller, but how to check the c
 \end{cases}
 \]
 
-We can try to estimate it with measurements, for example with sensors. But in real life, the task is not that trivial due to some problems:
-
-\begin{enumerate}
-    \item Lack of sensors. For a quadrotor, we cannot measure the height straightforwardly.
-    \item Measurements can be imprecise or biased.
-    \item Measurements can be only made in discrete time.
-\end{enumerate}
-
-The key problem arises when the output of the system \(y\) is not the whole state \(x\), but \(y = Cx\), which means that we are able to get the state partially.
-
-These are just several problems that create difficulties for us to measure the state of the system.
 
 \subsection{Measurement and estimation}
 
@@ -135,18 +141,18 @@ State estimation error is the following:
 
 \subsection{Dynamics estimation}
 
-We can always find \(y = C \hat x - y\).
-\[ y = C \hat x - y = C \hat x - Cx = C \epsilon\]
+We can always find \(\Tilde y = C \hat x - y\).
+\[ \Tilde y = C \hat x - y = C \hat x - Cx = C \epsilon\]
 
 Let's suggest that the dynamics should also hold for the observed state:
 \[
-\hat \dot x = A \hat x + Bu
+    \hat{\dot {x}} = A \hat x + Bu
 \]
 
-Let's introduce in our equation a linear correction law \( -L \, y\). Since \(y = C \hat x - y\), we get:
+Let's introduce in our equation a linear correction law \( -L \, \Tilde y\). Since \(\Tilde y = C \hat x - y\), we get:
 
 \begin{equation}\label{eq:luenberger_obs}
-    \hat \dot x = A \hat x + Bu + L(y - C \hat x) 
+    \hat{\dot {x}} = A \hat x + Bu + L(y - C \hat x) 
 \end{equation}
 
 
@@ -157,11 +163,16 @@ But how to find a suitable observer gain \(L\)?
 Let's subtract \(\dot x = Ax + Bu\) from Equation  (\ref{eq:luenberger_obs}) . The equation we got is the observer error dynamics:
 
 \begin{equation}
-    \hat \dot x - \dot x = A \hat x - Ax + L(y - C \hat x)
+    \hat{\dot {x}} - \dot x = A \hat x - Ax + L(y - C \hat x)
 \end{equation}
 
 \begin{equation}
-    \hat \dot x - \dot x = A \hat x - Ax + L(Cx - C \hat x) = A \hat x - Ax + LC(x - \hat x)
+    \hat{\dot {x}} - \dot x = A (\hat x - x) + L(Cx - C \hat x) = A \hat x - Ax + LC(x - \hat x)
+\end{equation}
+
+
+\begin{equation}
+    \hat{\dot {x}} - \dot x = A \hat x - Ax + LC(\hat x - x)
 \end{equation}
 
 \begin{equation}
@@ -172,7 +183,7 @@ Let's subtract \(\dot x = Ax + Bu\) from Equation  (\ref{eq:luenberger_obs}) . T
 With no knowledge of $x$ nad $\hat x$, we can define the stability of the system. 
 
 What we want is the error converging to 0. To obtain this, the observer $\dot \epsilon = (A - LC) \epsilon$ needs to be stable. 
-$A-LC \in \mathcal{H}$.
+$(A-LC) \in \mathcal{H}$.
 
 Recall:
 \begin{itemize}
@@ -183,11 +194,11 @@ Recall:
 But now the gain $L$ is in the left side for the  observer (unlike $K$ for the controller), so we cannot use any stabilization methods
 (LQR, pole placement) right away. 
 
-We need to introduce the following change (or, we can solve the \textit{dual problem}):
+We need to introduce the following change (or, we can solve the \textit{dual problem}), 
 find such L that:
 \[A^T - C^TL^T \in \mathcal{H}\]
 
-ANd  now, for this equation we can use LQR or poole-placement. 
+And  now, for this equation we can use LQR or pole placement. 
 
 % \dot x = Ax 
 
@@ -207,16 +218,16 @@ ANd  now, for this equation we can use LQR or poole-placement.
 
 \[
 \begin{cases}
-    \dot x = Ax + BK \hat x \\
-    \hat \dot x = A \hat x - BK \hat x + LC(x - \hat x)
+    \dot x = Ax - BK \hat x \\
+    \hat{\dot {x}} = A \hat x - BK \hat x + LC(x - \hat x)
 \end{cases}
 \]
 
 
 \begin{equation}
     \begin{cases}
-        \dot x = Ax + BK \hat x \label{eq:state_eq1} \\
-        \hat \dot x = A \hat x - BK \hat x - LC(\hat x - x) 
+        \dot x = Ax - BK \hat x \label{eq:state_eq1} \\
+        \hat{\dot {x}} = A \hat x - BK \hat x - LC(\hat x - x) 
     \end{cases}
 \end{equation}
 
@@ -226,7 +237,7 @@ ANd  now, for this equation we can use LQR or poole-placement.
 % \]
 
 Let's do a change of variables so that it would be easier to analyze the eigenvalues:
-$e = x - \hat x$, $\dot e = \dot x - \hat \dot x$. 
+$e = x - \hat x$, $\dot e = \dot x - \hat{\dot {x}}$. 
 Let's subtract (1) of  \ref{eq:state_eq1} from (2) of \ref{eq:state_eq1}:
 
 \[\dot e = A \hat x - BK \hat x - LC(\hat x - x) - Ax + BK \hat x \]
@@ -266,3 +277,7 @@ Now let's turn back to the equation 1 of the system and rewrite it.
 \]
 
 The eigenvalues of the system are the union of eigenvalues of $(A-  BK)$ and $(A-LC)$. 
+
+\begin{tcolorbox}[colback=green!10,colframe=green!50!black,title=\textbf{Separation Principle}]
+    As long as the observer and the controller are stable independently, the overall system is stable too. 
+\end{tcolorbox}

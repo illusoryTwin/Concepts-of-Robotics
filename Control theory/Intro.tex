@@ -19,7 +19,9 @@ The set $\{ \mathbf{x}, \ \dot{\mathbf{x}} \ ..., \ \mathbf{x}^{(n-1)} \}$ is ca
 \textbf{State} of the system is a minimal set of variables that describe the system. Based on the current state and future inputs,
 we can predict the behaviour of the system. \\
 
-\subsection{Introducing input}
+A few examples of variables in a dynamical system include position, velocity, acceleration, electric charge, magnetic field, etc.
+
+\subsection{Input}
 General form of an n-th order linear ODE with an input can be presented as follows:
 %
 \begin{equation}
@@ -34,7 +36,7 @@ General form of an n-th order linear ODE with an input can be presented as follo
 State-space representation of a linear system with an input is:
 %
 \begin{equation}
-    \dot x = Ax + Bu
+    \mathbf{\dot{x}} =\mathbf{A}\mathbf{x} + \mathbf{B}\mathbf{u} \\
 \end{equation}
 
 $A$ is called a \textbf{state matrix} and x is a \textbf{state vector}, 
@@ -43,7 +45,9 @@ $B$ is called a \textbf{control matrix} and $u$ is a \textbf{control vector}.
 
 $u$ might be either a scalar or a vector. 
 
-\subsection{Introducing output}
+\underline{\textit{Note:}} The transition from ODE to state-space representation is described further. 
+
+\subsection{Output}
 Equations might also have an output, which can have plenty of physical meanings and interpretations. Let's list some of them:
 what we measure (position and orientation of a motor), what we want to control (the height of the quadrotor).
 
@@ -61,7 +65,7 @@ Example of system wth input and output:
 If $u$ and $y$ are scalars, the system is called \emph{single-input single-output (SISO)}, if they are vectors - \emph{multi-input multi-output (MIMO)}.
 
 \subsection*{Linear systems}
-In case if relationships between state, output and control are linear, we can model system in following form:
+In case if relationships between state, output and control are linear, we can model system in the following form:
 \begin{equation}
 \begin{cases}
 \mathbf{\dot{x}} =\mathbf{A}\mathbf{x} + \mathbf{B}\mathbf{u} \\
@@ -84,7 +88,7 @@ Where
 
 If matrices A, B, C, D are time-independent, then we call such systems \textbf{time-invariant.} 
 
-More frequently we work with systems when the output does not depend on control. 
+More frequently we work with systems when the output does not depend on the control. 
 
 \begin{equation}
     \begin{cases}
@@ -122,6 +126,59 @@ u
 \end{bmatrix}
 \]
 
+TO DO: explain it
+
+Define the state-space variables:
+\[
+\begin{aligned}
+    x_1(t) &= y(t) \\
+    x_2(t) &= \frac{dy(t)}{dt} \\
+    x_3(t) &= \frac{d^2 y(t)}{dt^2} \\
+    &\ \vdots \\
+    x_n(t) &= \frac{d^{n-1} y(t)}{dt^{n-1}}
+\end{aligned}
+\]
+
+They will comprise the state vector \(\mathbf{x}\). The vector \(\dot{\mathbf{x}}\) is essentially the derivative of the state vector. 
+
+
+$\dot{\mathbf{x}}$ includes the variable with the highest degree (n), while the variable with the highest degree in a state vector $\mathbf{x}$ is of the order (n-1).
+
+
+\begin{center}
+    \underline{\textbf{Example:}}
+\end{center}
+
+\[\ddot x + 3 \dot x - x = 10 u\]
+
+\underline{Solution}
+\[
+\begin{cases}
+    \dot{x} = \dot{x} \\
+    \ddot{x} = 10u +  x - 3\dot x
+\end{cases}
+\]
+
+\[
+\begin{bmatrix}
+\dot{x} \\
+\ddot{x}
+\end{bmatrix} = 
+\begin{bmatrix}
+0 & 1  \\
+1 & -3  
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+\dot{x} 
+\end{bmatrix} + 
+\begin{bmatrix}
+0 \\
+10u 
+\end{bmatrix}
+\]
+
+
 \subsection{State-Space to ODE conversion}
 
 \[
@@ -136,7 +193,9 @@ We need to represent this system as an ODE in the form:
 
 Let's take the derivative of \(y\):
 \[\dot{y} = C\dot{x} = CAx\]
-\dots
+\begin{center}
+    \dots
+\end{center}
 \[y^{(n)} = CA^{(n)} x\]
 
 \[y = \begin{bmatrix} C \\ CA \\ \dots \\ CA^{(n-1)} \end{bmatrix} x = Ox, \]

@@ -147,7 +147,9 @@ Then, the error dynamics become:
 To stabilize the system, suggest \(v = -Ke\), then:
 \[\dot{e} = (A - BK)e.\]
 
-Therefore, the control law becomes:
+We choose such control gains that will make $(A-BK) \in \mathcal{H}$ (and therefore make the system stable).
+
+And then, the control law becomes:
 \[u = u^* + K(x^* - x).\]
 
 \subsection{Point-to-Point Control}

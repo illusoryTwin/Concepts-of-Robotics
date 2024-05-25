@@ -4,7 +4,7 @@
 
 The Laplace transform is an integral transformation that converts a function of a real variable \(t\) (time domain) to a function of a complex variable \(s\) (frequency domain). 
 
-We can think of Laplace transform ass as general case of Fourier transform (Steve Brunton).
+We can think of Laplace transform as a general case of Fourier transform (Steve Brunton).
 
 The Laplace transform is a tool for solving differential equations by transforming them into algebraic equations.
 
@@ -40,7 +40,7 @@ The inverse Laplace transform transforms the image of your function \(F(s)\) fro
     f(t) = {\mathcal {L}}^{-1}\{F\}(t) = {\frac {1}{2\pi i}}\lim _{T\to \infty }\int _{\gamma -iT}^{\gamma +iT}e^{st}F(s)\,ds
 \end{equation}
 
-However, in practice, we mostly use precalculated Laplace transforms and then try to decompose the image \(X(s)\) into known transforms of functions obtained from a table, and construct the inverse by inspection, or just use some symbolic routines.
+However, in practice, we mostly use precalculated Laplace transforms and then try to decompose the image \(X(s)\) into known transforms of functions obtained from the table, and construct the inverse by inspection, or just use some symbolic routines.
 
 \subsection{Laplace Transform of a Function's Derivative}
 
@@ -52,7 +52,7 @@ For us, one of the most useful properties of Laplace transform is that if we app
 
 which is true for \(x(0) = 0\).
 
-Thus, we can define a **derivative operator**:
+Thus, we can define a derivative operator:
 \begin{equation}
     \frac{dx}{dt} \xrightarrow{\mathcal{L}} s X(s)
 \end{equation}
@@ -110,6 +110,8 @@ Applying the inverse Laplace transform with zero initial conditions yields:
 This form is called a \textbf{transfer function}. 
 
 \subsubsection*{Example 2}
+Consider the ODE with the input \(u\). 
+
 \begin{equation}
     2 \dddot y + 5 \dot y - 40 y = 10 u
 \end{equation}
@@ -126,7 +128,6 @@ This form is called a \textbf{transfer function}.
     Y(S) = \frac{1}{(2S - 4)} U(S)
 \end{equation}
 
-Consider the ODE with the input \(u\).
 
 \subsection{State-Space to Transfer Function}
 

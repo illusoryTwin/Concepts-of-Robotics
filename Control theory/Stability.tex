@@ -35,14 +35,20 @@ A system is \textbf{asymptotically stable} if:
 \end{tcolorbox}
 
 For any initial point that lies in the \(\delta\)-sized ball, the trajectory will asymptotically approach the node (point $x_0$).
-Or, the solutions starting from the \(\delta\)-sized ball, converge to the node. 
+Or, the solutions starting from the \(\delta\)-sized ball, converge to the node. \\
 
-Marginal Stability: Specific to LTI systems and defined by the eigenvalues' locations. It implies that the system's response neither grows unbounded nor decays, often resulting in sustained oscillations.
+\textbf{Lyapunov Stability:} A more general concept applicable to all systems, ensuring that trajectories remain close to the equilibrium point if they start close enough.
+Assymptotically stable systems are stable in the sense of Lyapunov.
+
+An equilibrium point which is Lyapunov stable but not asymptotically stable is called marginally stable point
 
 
-Lyapunov Stability: A more general concept applicable to all systems, ensuring that trajectories remain close to the equilibrium point if they start close enough.
+\textbf{Marginal Stability:} Specific to LTI systems and defined by the eigenvalues' locations. It implies that the system's response neither grows unbounded nor decays, often resulting in sustained oscillations.
 
 
+\begin{center}
+    \includegraphics[scale=0.42]{images/stability_plots.png}
+\end{center}
 
 \subsection{Stability of autonomous LTI}
 
@@ -53,7 +59,7 @@ A system is considered \underline{\textbf{autonomous}} if its evolution depends 
 \underline{Example}
 
 \[
-\dot{x} = Ax
+\mathbf{\dot{x}}=\mathbf{A}\mathbf{x} + \mathbf{B}\mathbf{u}
 \]
 
 \subsubsection{Diagonal matrices}
@@ -63,7 +69,7 @@ Let's introduce a trick for autonomous Linear Time-Invariant (LTI) systems.
 First of all, recall the properties of a diagonal matrix and eigen-decomposition.
 \begin{itemize}
     \item \textbf{Diagonal matrix}
-        \[\dot{z} = Dz\]
+        \[\mathbf{\dot{z}} = \mathbf{D}  \mathbf{z}\]
         \[
         \begin{cases}
             \dot{x}_1 = d_1 x_1 \\
@@ -79,24 +85,24 @@ First of all, recall the properties of a diagonal matrix and eigen-decomposition
 \end{itemize}
 
 Given an autonomous Linear Time-Invariant (LTI) system, let's switch to the system with a diagonal matrix:
-
 \[
-\dot{x} = Ax
+\mathbf{\dot{x}} = \mathbf{A} \mathbf{x}
 \]
 
 \[
-\dot{x} = VDV^{-1}x
+\mathbf{\dot{x}} = \mathbf{V} \mathbf{D} \mathbf{V}^{-1} \mathbf{x}
 \]
 
 \[
-V^{-1}\dot{x} = V^{-1}VDV^{-1}x = DV^{-1}x
+\mathbf{V}^{-1} \mathbf{\dot{x}} = \mathbf{V}^{-1} \mathbf{V} \mathbf{D} \mathbf{V}^{-1} \mathbf{x} = \mathbf{D} \mathbf{V}^{-1} \mathbf{x}
 \]
 
-Change of variables: \(z = V^{-1}x\), \(\dot{z} = Dz\), 
+Change of variables: \(\mathbf{z} = \mathbf{V}^{-1} \mathbf{x}\), \(\mathbf{\dot{z}} = \mathbf{D} \mathbf{z}\),
 
 \[
-V^{-1}\dot{x} = Dz
+\mathbf{V}^{-1} \mathbf{\dot{x}} = \mathbf{D} \mathbf{z}
 \]
+
 
 The system is asymptotically stable when for all the elements of \(D\) are \( < 0\). 
 The system is stable when the elements of \(D\) are \(\leq 0\).  
@@ -111,7 +117,7 @@ The system is stable when the elements of \(D\) are \(\leq 0\).
 \subsubsection{General case}
 
 Consider the LTI:
-\[\dot x = Ax\]
+\[\mathbf{\dot x} = \mathbf{A} \mathbf{x}\]
 
 \begin{tcolorbox}[colback=green!10,colframe=green!50!black]
     The system is called \textbf{stable} iff real parts of eigenvalues of A are non-positive.
@@ -120,3 +126,55 @@ Consider the LTI:
 \begin{tcolorbox}[colback=green!10,colframe=green!50!black]
     The system is called \textbf{asymptotically stable} iff real parts of eigenvalues of A are  strictly negative. 
 \end{tcolorbox}
+
+\subsection{Pole placement method}
+
+\textbf{Pole placement} is a fundamental and useful method for achieving stabilization in control systems. With this method, we can manually choose the locations of the system's poles, which correspond to the points where the system would ideally converge to.
+
+\begin{center}
+    \underline{\textbf{Example:}}
+
+\end{center}
+Check stability of the system and in case the system is unstable, stabilize it using the Pole Placement method:
+
+\[
+\begin{bmatrix}
+\dot{x} \\
+\ddot{x}
+\end{bmatrix} = 
+\begin{bmatrix}
+0 & 1  \\
+2 & -1  
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+\dot{x} 
+\end{bmatrix} + 
+\begin{bmatrix}
+1 \\
+0 
+\end{bmatrix} u
+\]
+
+Let's check the eigenvalues:
+\[
+\text{det} (A - \lambda I) = 0
+\]
+\[
+\text{det}\left(\begin{bmatrix}-\lambda & 1 \\ 2 & -1 - \lambda\end{bmatrix}\right) = \lambda(1 + \lambda) -2 = \lambda^2 + \lambda - 2
+\]
+Eigenvalues \( \lambda_1, \lambda_2 = -2, 1 \).
+Since one of the roots is positive, the system is unstable. Let \( U = -K \),
+Then, \( \dot{x} = Ax - BKx \).
+
+Consider the matrix \( A-BK \):
+\[
+A-BK = \begin{bmatrix}0 & 1 \\ 2 & -1\end{bmatrix} - \begin{bmatrix}1 \\ 0\end{bmatrix}\begin{bmatrix}k_1 & k_2\end{bmatrix} = \begin{bmatrix}0 & 1 \\ 2 & -1\end{bmatrix} - \begin{bmatrix}k_1 & k_2 \\ 0 & 0\end{bmatrix} = \begin{bmatrix}-k_1 - \lambda & 1-k_2 \\ 2 & -1-\lambda\end{bmatrix}
+\]
+
+Let's choose negative eigenvalues \( -1 \) and \( -2 \).
+Solving the system of two equations, we get \( k_1 = 2 \), \( k_2 = 1 \).
+And the control law will be:
+\[
+u = - Kx = \begin{bmatrix}2 & 1\end{bmatrix}x
+\]
