@@ -1,4 +1,151 @@
-CHECK! 
+
+\section{Kalman Filter} 
+
+Kalman Filter is a powerful algorithm that 
+the Kalman Filter is a generic algorithm that is used to estimate system parameters. 
+
+
+It can use inaccurate or noisy measurements to estimate the state of that variable 
+or another unobservable variable with greater accuracy.
+
+
+
+Assume that the DT LTI system dynamics takes the form: 
+\[x-{i+1} = Ax_i + Bu_i + w_i\]
+$w_i$ is the random noise which satisfies the Gaussian distribution. 
+
+\subsection{Open-loop observer}
+Let's propose an open-loop observer
+
+\[\hat x-{i+1} = A \hat x_i + Bu_i\]
+
+The estimation error is as follows:
+\[\tilde{x}_{i+1} = A \tilde{x}_i + w_i\]
+
+We can compute the mean error \(E[\tilde{x}_{i+1}]\):
+\[E[\tilde{x}_{i+1}] = E[A \tilde{x}_i + w_i] = AE[\tilde{x}_i]\]
+
+If we pick such an initial state that \(E[\tilde{x}_i] = 0\), then the state estimation dynamics would be 0 too.
+
+Knowing the autocovariance \(P_i\), we can compute \(P_{i+1}\):
+\[
+P_{i+1} = E[\tilde{x}_{i+1} \tilde{x}_{i+1}^T] = E[(A \tilde{x}_i + w_i)(A \tilde{x}_i + w_i)^T] \\
+= E[A \tilde{x}_i \tilde{x}_i^T A^T + A \tilde{x}_i w_i^T + w_i \tilde{x}_i^T A^T + w_i w_i^T]
+\]
+
+We can assume that the random process \(w\) is uncorrelated with \(\tilde{x}\), so 
+\[ E[\tilde{x}_i w_i^T] = E[w_i \tilde{x}_i^T] = 0 \]
+\[ P_{i+1} = E[A \tilde{x}_i \tilde{x}_i^T A^T + w_i w_i^T] = AP_iA^T + Q \]
+
+\subsection{Closed-loop observer}
+\[
+\begin{cases}
+    \hat{x}_{i+1}^- = A \hat{x}_i + Bu_i \\
+    \hat{x}_{i+1} = \hat{x}_{i+1}^- + L(y_i - H \hat{x}_{i+1}^-)
+\end{cases}
+\] 
+
+Let's subtract \(x_{i+1}\) from the second equation of the system.
+
+\[
+\hat{x}_{i+1} - x_{i+1} = \hat{x}_{i+1}^- - x_{i+1} + L(y_i - H \hat{x}_{i+1}^-)
+\]
+
+\[
+\hat{x}_{i+1} - x_{i+1} = \hat{x}_{i+1}^- - x_{i+1} + L(Hx_i + v_i - H \hat{x}_{i+1}^-)
+\]
+
+Note that \(\tilde{x}_{i+1} = \hat{x}_{i+1} - x_{i+1}\) and \(\tilde{x}_{i+1}^- = \hat{x}_{i+1}^- - x_{i+1}\)
+
+\[
+\tilde{x}_{i+1} = \tilde{x}_{i+1}^- + L(Hx_i + v_i - H \hat{x}_{i+1}^-)
+\]
+
+
+From the equation \(x_{i+1} = A x_i + B u_i + w_i\), let's subtract the first equation of the system, we get: 
+\[ x_{i+1} - \hat x_{i+1}^- = A x_i + Bu_i + w_i  - A \hat x_i - Bu_i\]
+
+\[ x_{i+1} - \hat x_{i+1}^- = A x_i + Bu_i + w_i - A \hat x_i - Bu_i\]
+
+
+Thus, we get the system of equations:
+\[
+\begin{cases}
+    \Tilde x_{i+1}^- = A \Tilde x_i + w_i\\
+    \Tilde x_{i+1} = (I - L_i H)\Tilde x_{i+1}^- - L_i v_i
+\end{cases}
+\]
+
+
+
+Now let's compute the estimation error mean dynamics. 
+
+\[
+E[\Tilde{x}_{i+1}^-] = E[A \Tilde{x}_i + w_i] = E[A \Tilde{x}_i] + E[w_i] = AE[\Tilde{x}_i]
+\]
+
+\[
+E[\Tilde{x}_{i+1}] = E[(I - L_i H)\Tilde{x}_{i+1}^- + L_i v_i] = E[(I - L_i H)\Tilde{x}_{i+1}^-] = (I - L_i H)E[\Tilde{x}_{i+1}^-]
+\]
+
+So, 
+\[
+\begin{cases}
+    E[\Tilde{x}_{i+1}^-] = AE[\Tilde{x}_i] \\
+    E[\Tilde{x}_{i+1}] = (I - L_i H)E[\Tilde{x}_{i+1}^-] 
+\end{cases}
+\]
+
+\subsubsection{A priori estimation error covariance}
+
+\[
+E[\Tilde{x}_{i+1}^- (\Tilde{x}_{i+1}^-)^T] = E[(A \Tilde{x}_i + w_i)(A \Tilde{x}_i + w_i)^T] = AP_iA^T + Q_i
+\]
+
+\subsubsection{A posteriori estimation error covariance}
+\[
+\begin{aligned}
+P_{i+1} = E[\Tilde{x}_{i+1} (\Tilde{x}_{i+1})^T] &= E\left[ \left( (I-L_i H) \Tilde{x}_{i+1}^- + L_i v_i \right) \left( (I-L_i H) \Tilde{x}_{i+1}^- + L_i v_i \right)^T \right] \\
+&= E\left[ (I-L_i H) \Tilde{x}_{i+1}^- (\Tilde{x}_{i+1}^-)^T (I -L_i H)^T + (I- L_i H) \Tilde{x}_{i+1}^- v_i^T \right. \\
+& \quad \left. + v_i (\Tilde{x}_{i+1}^-)^T (I-L_i H)^T + L_i v_i v_i^T L_i^T \right]
+\end{aligned}
+\]
+
+\subsection{Kalman Filter Gain}
+
+The global task is to lower the influence of noise on our system. To optimize 
+
+We attempt to optimize $L_i$ (or to derive the optimal Kalman gain) while minimizing the mean error.
+
+The cost function J:
+\[
+\begin{aligned}
+J &= E \left[ \sum \Tilde{x}_{i+1}^2 \right] = E\left[\text{tr}(\Tilde{x}_{i+1} \Tilde{x}_{i+1}^T)\right] = \text{tr}(E[\Tilde{x}_{i+1} \Tilde{x}_{i+1}^T]) = \text{tr}(P_{i+1}) \\
+P_{i+1} &= E\left[ \left( (I-L_i H) \Tilde{x}_{i+1}^- + L_i v_i \right) \left( (I-L_i H) \Tilde{x}_{i+1}^- + L_i v_i \right)^T \right] \\
+&= tr((I-L_i H) \Tilde{x}_{i+1}^- (\Tilde{x}_{i+1}^-)^T (I -L_i H)^T + (I- L_i H) \Tilde{x}_{i+1}^- v_i^T  \\
+& \quad  + v_i (\Tilde{x}_{i+1}^-)^T (I-L_i H)^T + L_i v_i v_i^T L_i^T)
+\end{aligned}
+\]
+
+Now let's find the derivative of \(J\) with respect to \(L_i\) and set it to zero:
+
+\begin{align*}
+    \frac{\partial J}{\partial L_i} 
+    &= 
+    -H P_{i+1}^- - (P_{i+1}^- H^\top)^\top + 
+    2(H P_{i+1}^- H^\top + R) L_i^\top = 0 \\
+    &=
+    -2 H P_{i+1}^- + 2(H P_{i+1}^- H^\top + R) L_i^\top = 0 \\
+    L_i (H P_{i+1}^- H^\top + R) &= P_{i+1}^- H^\top \\
+    L_i &= P_{i+1}^- H^\top (H P_{i+1}^- H^\top + R)^{-1}
+\end{align*}
+
+So, the Kalman gain can be optimally chosen as 
+\[
+L_i = P_{i+1}^- H^\top (H P_{i+1}^- H^\top + R)^{-1}.
+\]
+
+
 
 Without a Kalman filter, if your system is not observable, you won't be able to retrieve all the state variables xx from the output yy alone.
 By using a Kalman filter, you can estimate all the state variables xx even if they are not all directly observable in yy. The filter uses the 

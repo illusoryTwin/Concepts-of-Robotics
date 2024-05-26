@@ -152,3 +152,67 @@ Then the initial system can be rewritten in the following form:
     Y = C((SI-A)^{-1}B + D)U
 \end{cases}
 \]
+
+\subsection{Stability analysis by the transfer function}
+
+You can determine if a system is stable by analyzing the poles of the transfer function. The key steps are:
+
+\begin{enumerate}
+    \item \textbf{Identify the Transfer Function:}
+
+    A transfer function \( H(s) \) is typically given in the form:
+    \[
+    H(s) = \frac{N(s)}{D(s)}
+    \]
+    where \( N(s) \) is the numerator polynomial and \( D(s) \) is the denominator polynomial.
+    
+    \item \textbf{Find the Poles of the Transfer Function:}
+
+    The poles of the transfer function are the roots of the denominator polynomial \( D(s) \). To find the poles:
+    \begin{enumerate}
+        \item Set \( D(s) = 0 \).
+        \item Solve for \( s \).
+    \end{enumerate}
+
+    \item \textbf{Analyze the Poles:}
+
+    The stability of the system is determined by the location of the poles in the complex \( s \)-plane.
+    \begin{itemize}
+        \item \textbf{Stable System:} All poles have negative real parts (i.e., they lie in the left half of the complex plane).
+        \item \textbf{Unstable System:} At least one pole has a positive real part (i.e., it lies in the right half of the complex plane).
+        \item \textbf{Marginally Stable System:} Poles are on the imaginary axis (i.e., they have zero real parts), and there are no repeated poles on the imaginary axis.
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Example:}
+
+Consider the transfer function:
+\[
+H(s) = \frac{s + 2}{s^2 + 3s + 2}
+\]
+
+\textbf{Step-by-Step Analysis:}
+
+\begin{enumerate}
+    \item Identify the denominator polynomial:
+    \[
+    D(s) = s^2 + 3s + 2
+    \]
+
+    \item Find the poles by solving \( D(s) = 0 \):
+    \[
+    s^2 + 3s + 2 = 0
+    \]
+    Factor the polynomial:
+    \[
+    (s + 1)(s + 2) = 0
+    \]
+    So, the poles are:
+    \[
+    s = -1, \quad s = -2
+    \]
+
+    \item Analyze the poles:
+    Both poles have negative real parts, so the system is stable.
+\end{enumerate}
+

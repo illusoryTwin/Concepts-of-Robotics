@@ -66,7 +66,9 @@ x_{n+1} - A^{n}x_1 = \begin{bmatrix} B & AB & A^2B \end{bmatrix} \begin{bmatrix}
 
 Thus, we showed that $x_{n+1} - A^{n}x_1$ must be in the column space of $C = \begin{bmatrix} B & AB & A^2B \end{bmatrix}$
 
-Now, note that since \( x_{n+1} \) can be any real number and \( x_1 \) can take a zero value, \( \mathbb{R} \) must be in the column space of C.
+Now, note that since \( x_{n+1} \) can be any real number and \( x_1 \) can take a zero value, 
+the left-hand side of the equation can take any values, so 
+\( \mathbb{R} \) must be in the column space of C.
 So, C must be a full-rank matrix. 
 
 
@@ -129,18 +131,23 @@ Controllability matrix for the system:
     is full column rank.
 \end{tcolorbox}
 
-\subsection{Controllability of Continuous-time systems}
 
 \subsection{PBH controllability criterion}
 
 It is an alternative way to test whether the pair (A, B) is controllable. 
 
-
-\begin{tcolorbox}[colback=green!10,colframe=green!50!black,title=\textbf{PBH criterion}]
-    The task of \textbf{stabilizing control} is defining the control law that makes a certain solution of 
-    a dynamical system stable.
+\begin{tcolorbox}[colback=green!10,colframe=green!50!black,title=\textbf{PBH Criterion}]
+    \((A, B)\) is controllable if and only if \(\text{rank}\left(\begin{bmatrix} A - \lambda I & B \end{bmatrix}\right) = n\)
+    for any \(\lambda \in \mathbb{C}\).
 \end{tcolorbox}
 
+Note that we only need to test at eigenvalues.
+
+1) \(\text{rank}(A - \lambda I) = n\) except for eigenvalues of \(A\).
+
+2) \(B\) needs to have some component in each eigenvector direction.
+
+3) If \(B\) is a random vector, \(B = \text{rand}(n, 1)\), \(\dots\), \((A, B)\) will be controllable with high probability.
 
 
 

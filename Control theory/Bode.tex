@@ -1,7 +1,14 @@
 \section{Bode}
 
+\subsection{Frequency response}
+
+\begin{tcolorbox}[colback=green!10,colframe=green!50!black,title=\textbf{Frequency response}]
+    \textbf{Frequency response} is a steady-state output of the system, given sinusoidal input.
+\end{tcolorbox}
+
+
 By steady-state we mean that initial conditoins have stopped playing a role.
-After some time passed we expect the output of the system to not depend on the initial conditions, but on the input. 
+After some time passed, we expect the output of the system to not depend on the initial conditions, but on the input. 
 
 Consider a system:
 \[Y(s) = G(s)U(s),\]
@@ -11,12 +18,12 @@ $u(t) = sin(\omega t)$ in time domain takes form $\frac{\omega}{\omega^2 + s^2}$
 
 \[Y(s) = G(s) \frac{\omega}{\omega^2 + s^2}\], 
 
-If a transfer function is a rational fraction, it can be reprresented in the following way:
+If a transfer function is a rational fraction, it can be represented in the following way:
 
 \[G(s) = \dfrac{n(s)}{(s+p_1)(s+p_2) + \dots + (s+p_n)} = \dfrac{r_1}{s+p_1} + \dots + \dfrac{r_n}{s+p_n}\]
 $p_i$ in this equations are the \textbf{poles}. 
 
-Previously, we introduced the stability analysis based on eigenvalues, but there is an equvivalent analysis based on poles. 
+Previously, we introduced the stability analysis based on eigenvalues, but there is an equivalent analysis based on poles. 
 
 
 A Bode plot usually consists of magnitude and phase response of a transfer function.
